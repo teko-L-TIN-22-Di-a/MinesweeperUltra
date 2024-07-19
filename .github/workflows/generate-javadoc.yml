@@ -21,7 +21,7 @@ jobs:
 
     - name: Generate Javadoc
       run: |
-        javadoc -d docs/ -subpackages src 
+        javadoc -d docs/ -subpackages src
 
         git config --global user.name 'BOTFloindil'
         git config --global user.email 'floindil@gmail.com'
