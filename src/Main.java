@@ -8,7 +8,7 @@ import javax.swing.SwingUtilities;
 public class Main {
     
     /**
-     * Not yet defined
+     * Not yet defined.
      */
     public Main() {
         //empty
