@@ -1,0 +1,31 @@
+name: Publish Javadoc
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '22'
+        distribution: 'adopt'
+
+    - name: Generate Javadoc
+      run: |
+        javadoc -d docs/ -subpackages app 
+
+        git config --global user.name 'BOTFloindil'
+        git config --global user.email 'floindil@gmail.com'
+
+        git add docs/.
+        git commit -m "Automated Javadoc deployment"
+        git push origin main --force
