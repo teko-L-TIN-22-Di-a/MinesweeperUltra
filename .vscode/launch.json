@@ -8,8 +8,8 @@
             "type": "java",
             "name": "Main",
             "request": "launch",
-            "mainClass": "app.Main",
-            "projectName": "BOWMASTER_669bddba"
+            "mainClass": "src.Main",
+            "projectName": "MinesweeperUltra_600abd98"
         }
     ]
 }
