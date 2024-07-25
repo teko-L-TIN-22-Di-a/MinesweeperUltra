@@ -22,7 +22,7 @@ jobs:
     - name: Generate Javadoc
       run: |
         # Create Javadoc files
-        javadoc -d docs/ -subpackages app
+        javadoc -d docs/ -subpackages src
         
         # Set user for updateing
         git config --global user.name 'BOTFloindil'
