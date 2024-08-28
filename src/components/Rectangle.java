@@ -22,8 +22,8 @@ public class Rectangle {
      * @param y         y value of the centerpoint
      */
     public Rectangle(int width, int height, int x, int y) {
-        location = new Point(x, y);
-        size = new Point(width, height);
+        this.location = new Point(x, y);
+        this.size = new Point(width, height);
         setCorners();
     }
 
@@ -53,16 +53,16 @@ public class Rectangle {
      * @return      true, if the point is inside the Rectangle object
      */
     public boolean collidePoint(Point point) {
-        if  (topLeft.x > point.x) {
+        if  (this.topLeft.x > point.x) {
             return false;
         }
-        else if  (topRight.y > point.y) {
+        else if  (this.topRight.y > point.y) {
             return false;
         }
-        else if  (bottomRight.x < point.x) {
+        else if  (this.bottomRight.x < point.x) {
             return false;
         }
-        else if  (bottomLeft.y < point.y) {
+        else if  (this.bottomLeft.y < point.y) {
             return false;
         }
         else {return true;}
@@ -93,14 +93,13 @@ public class Rectangle {
     public Point getCorner(Corners corner) {
         switch (corner) {
             case BOTTOM_LEFT:
-                return bottomLeft;
+                return this.bottomLeft;
             case BOTTOM_RIGHT:
-                return bottomRight;
+                return this.bottomRight;
             case TOP_RIGHT:
-                return topRight;
+                return this.topRight;
             default:
-                return topLeft;
-
+                return this.topLeft;
         }
     }
 
@@ -108,10 +107,10 @@ public class Rectangle {
      * Sets the corner coordinates based on the location and the size of the Rectangle object.
      */
     private void setCorners() {
-        topLeft = new Point (location.x - size.x/2, location.y - size.y);
-        topRight = new Point (location.x + size.x/2, location.y - size.y);
-        bottomLeft = new Point (location.x - size.x/2, location.y);
-        bottomRight = new Point (location.x + size.x/2, location.y);
+        this.topLeft = new Point (this.location.x, this.location.y);
+        this.topRight = new Point (this.location.x + size.x, this.location.y);
+        this.bottomLeft = new Point (this.location.x, this.location.y + size.y);
+        this.bottomRight = new Point (this.location.x + size.x, this.location.y + size.y);
     }
 
     /**
@@ -120,10 +119,10 @@ public class Rectangle {
      */
     public List<Point> getCorners() {
         List<Point> points = new ArrayList<>();
-        points.add(topLeft);
-        points.add(topRight);
-        points.add(bottomLeft);
-        points.add(bottomRight);
+        points.add(this.topLeft);
+        points.add(this.topRight);
+        points.add(this.bottomLeft);
+        points.add(this.bottomRight);
         return points;
     }
 
@@ -134,7 +133,7 @@ public class Rectangle {
      * @see             setCorners
      */
     public void setSize(int width, int height) {
-        size = new Point(width, height);
+        this.size = new Point(width, height);
         setCorners();
     }
 
@@ -144,7 +143,7 @@ public class Rectangle {
      * @param newY new y location for the rectangle.
      */
     public void setLocation(int newX, int newY) {
-        location = new Point(newX, newY);
+        this.location = new Point(newX, newY);
         setCorners();
     }
 
@@ -153,7 +152,7 @@ public class Rectangle {
      * @return size of the rectangle
      */
     public Point getSize() {
-        return size;
+        return this.size;
     }
 
     /**
@@ -161,7 +160,7 @@ public class Rectangle {
      * @return width of the rectangle
      */
     public int getWidth() {
-        return size.x;
+        return this.size.x;
     }
 
     /**
@@ -169,7 +168,7 @@ public class Rectangle {
      * @return height of the rectangle
      */
     public int getHeight() {
-        return size.y;
+        return this.size.y;
     }
 
     /**
@@ -177,7 +176,7 @@ public class Rectangle {
      * @return location of the rectangle
      */
     public Point getLocation() {
-        return location;
+        return this.location;
     }
 
     /**
@@ -185,15 +184,15 @@ public class Rectangle {
      * @return x value of the location
      */
     public int getX() {
-        return location.x;
+        return this.location.x;
     }
 
     /**
      * Updates the x value of the Rectangle objects location.
      * @param value new value for location.x
      */
-    public void updateX(int value) {
-        location.x += value;
+    public void setX(int value) {
+        this.location.x = value;
     }
 
     /**
@@ -201,14 +200,14 @@ public class Rectangle {
      * @return y value of the location
      */
     public int getY() {
-        return location.y;
+        return this.location.y;
     }
 
     /**
      * Updates the y value of the Rectangle objects location.
      * @param value new value for location.y
      */
-    public void updateY(int value) {
-        location.y += value;
+    public void setY(int value) {
+        this.location.y = value;
     }
 }

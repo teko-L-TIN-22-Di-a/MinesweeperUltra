@@ -30,8 +30,8 @@ public class Controller extends JPanel{
      */
     public Controller() {
         setSize(StaticValues.CANVAS_WIDTH, StaticValues.CANVAS_HEIGHT);
-        handler = new MouseHandler();
-        tracker = new MouseTracker();
+        this.handler = new MouseHandler();
+        this.tracker = new MouseTracker();
     }
 
     /**
@@ -39,7 +39,7 @@ public class Controller extends JPanel{
      * @return mouse location
      */
     public Point getMousePos() {
-        return tracker.getLocation();
+        return this.tracker.getLocation();
     }
 
     /**
@@ -47,7 +47,7 @@ public class Controller extends JPanel{
      * @return true, if the Button M1 is beeing pressed
      */
     public boolean getM1down() {
-        return handler.getM1down();
+        return this.handler.getM1down();
     }
 
     /**
@@ -55,7 +55,7 @@ public class Controller extends JPanel{
      * @param buttonList    list to store
      */
     public void setButtonList(List<Button> buttonList) {
-        buttonlist = buttonList;
+        this.buttonlist = buttonList;
     }
 
     /**
@@ -63,8 +63,8 @@ public class Controller extends JPanel{
      * @param panel panel to add listeners
      */
     public void setupListeners(JPanel panel) {
-        panel.addMouseListener(handler);
-        panel.addMouseMotionListener(tracker);
+        panel.addMouseListener(this.handler);
+        panel.addMouseMotionListener(this.tracker);
     }
 
     /**
@@ -79,7 +79,7 @@ public class Controller extends JPanel{
         @Override
         public void mousePressed(MouseEvent e) {
             if (e.getButton() == 1) {
-                m1down = true;
+                this.m1down = true;
             }
         }
 
@@ -90,7 +90,7 @@ public class Controller extends JPanel{
                     Point mousePosition = tracker.getLocation();
                     b.actionCheck(mousePosition);
                 }
-                m1down = false;
+                this.m1down = false;
             }
         }
 
@@ -99,7 +99,7 @@ public class Controller extends JPanel{
          * @return true, if the Button M1 is beeing pressed
          */
         public boolean getM1down() {
-            return m1down;
+            return this.m1down;
         }
     }
 
@@ -113,19 +113,19 @@ public class Controller extends JPanel{
 
         @Override
         public void mouseMoved(final MouseEvent e) {
-            location = e.getPoint();
-            if (location == null) {
-                location = new Point(0, 0);
+            this.location = e.getPoint();
+            if (this.location == null) {
+                this.location = new Point(0, 0);
             }
         }
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            location = e.getPoint();
+            this.location = e.getPoint();
         }
 
         public Point getLocation() {
-            return location;
+            return this.location;
         }
     }
 }

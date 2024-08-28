@@ -113,18 +113,18 @@ public class Button extends Component{
 
     /**
      * Takes a Runnable and stores it as action variable
-     * @param newAction    new action to perform on button click
+     * @param action    new action to perform on button click
      */
-    public void setAction(Runnable newAction) {
-        action = newAction;
+    public void setAction(Runnable action) {
+        this.action = action;
     }
 
     /**
      * Runs the defined action
      */
     public void action() {
-        if (action != null) {
-            action.run();
+        if (this.action != null) {
+            this.action.run();
         }
     }
 
@@ -141,13 +141,13 @@ public class Button extends Component{
 
     /**
      * Takes a String and puts in on the Button
-     * @param newText text to be displayed on the Button
+     * @param text text to be displayed on the Button
      */
-    public void updateLabel(String newText) {
-        if (text != "") {
-            text = newText;
+    public void updateLabel(String text) {
+        if (this.text != "") {
+            this.text = text;
         }
-        label = new Textfield(getLocation().x, getLocation().y,  text);
+        this.label = new Textfield(getLocation().x, getLocation().y,  text);
         int labelWidth =  label.getWidth();
         int labelHeight =  label.getHeight();
         Graphics g = getImage().getGraphics();

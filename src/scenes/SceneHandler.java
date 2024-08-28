@@ -37,9 +37,9 @@ public class SceneHandler {
      * @see setScene
      */
     public void startNew() {
-        activeScene.stop();
+        this.activeScene.stop();
         setScene(activeScene, SceneTag.PREVIOUS);
-        newScene.start();
+        this.newScene.start();
         setScene(newScene, SceneTag.ACTIVE);
     }
 
@@ -51,8 +51,8 @@ public class SceneHandler {
      * @see startNew
      */
     public void startPrevious() {
-        setScene(previousScene, SceneTag.NEW);
-        setScene(activeScene, SceneTag.PREVIOUS);
+        setScene(this.previousScene, SceneTag.NEW);
+        setScene(this.activeScene, SceneTag.PREVIOUS);
         startNew();        
     }
 
@@ -67,13 +67,13 @@ public class SceneHandler {
     public void setScene(Scene scene, SceneTag tag) {
         switch (tag) {
             case ACTIVE:
-                activeScene = scene;
+                this.activeScene = scene;
                 break;
             case PREVIOUS:
-                previousScene = scene;
+                this.previousScene = scene;
                 break;
             case NEW:
-                newScene = scene;
+                this.newScene = scene;
                 break;
         }
     }
@@ -83,7 +83,7 @@ public class SceneHandler {
      * @return Scene object activeScene
      */
     public Scene getActive() {
-        return activeScene;
+        return this.activeScene;
     }
 
     /**
@@ -91,7 +91,7 @@ public class SceneHandler {
      * @return Scene object previousScene
      */
     public Scene getPrevious() {
-        return previousScene;
+        return this.previousScene;
     }
 
     /**
@@ -99,6 +99,6 @@ public class SceneHandler {
      * @return Scene object newScene
      */
     public Scene getNew() {
-        return newScene;
+        return this.newScene;
     }
 }

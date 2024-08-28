@@ -18,12 +18,17 @@ public class Textfield extends Component{
      * @param y             location y
      * @param buttonText    displayed text
      */
-    public Textfield(int x, int y, String buttonText) {
+    public Textfield(int x, int y, String text) {
         super(x, y, 1, 1);
-        text = buttonText;
+        this.text = text;
         BufferedImage image = createImage();
         setImage(image);
         setSize(image.getWidth(), image.getHeight());
+    }
+
+    public void setText(String text) {
+        this.text = text;
+        setImage(createImage());
     }
 
     /**

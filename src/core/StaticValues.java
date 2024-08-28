@@ -20,6 +20,12 @@ public class StaticValues {
     /** Framerate */
     public static int UPDATE_PERIOD = 60;
 
+    public static enum FieldState {
+        UNKNOWN,
+        FLAGGED,
+        REVEILED,
+    }
+
     // Enumerations for Selections
     /** Available Rectangle corners */
     public static enum Corners {

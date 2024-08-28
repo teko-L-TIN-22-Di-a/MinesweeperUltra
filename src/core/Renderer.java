@@ -37,9 +37,9 @@ public class Renderer extends JFrame{
      * Creates a Renderer Object.
      */
     public Renderer() {
-        canvasSize = new Point(StaticValues.CANVAS_WIDTH, StaticValues.CANVAS_HEIGHT);
-        canvas.setPreferredSize(new Dimension(canvasSize.x, canvasSize.y));
-        this.setContentPane(canvas);
+        this.canvasSize = new Point(StaticValues.CANVAS_WIDTH, StaticValues.CANVAS_HEIGHT);
+        this.canvas.setPreferredSize(new Dimension(this.canvasSize.x, this.canvasSize.y));
+        this.setContentPane(this.canvas);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.pack();
         this.setTitle(StaticValues.GAMENAME);
@@ -51,8 +51,8 @@ public class Renderer extends JFrame{
      * @param debug if true, Hitboxes and ImageBoxes will be drawn
      */
     public Renderer(boolean debug) {
-        canvasSize = new Point(StaticValues.CANVAS_WIDTH, StaticValues.CANVAS_HEIGHT);
-        canvas.setPreferredSize(new Dimension(canvasSize.x, canvasSize.y));
+        this.canvasSize = new Point(StaticValues.CANVAS_WIDTH, StaticValues.CANVAS_HEIGHT);
+        this.canvas.setPreferredSize(new Dimension(this.canvasSize.x, this.canvasSize.y));
         this.setContentPane(canvas);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.pack();
@@ -63,11 +63,11 @@ public class Renderer extends JFrame{
 
     /**
      * Takes a Scene for rendering.
-     * @param newScene Scene to render
+     * @param scene Scene to render
      */
-    public void setScene(Scene newScene) {
-        scene = newScene;
-        System.out.println("> start scene " + scene.getTAG());
+    public void setScene(Scene scene) {
+        this.scene = scene;
+        System.out.println("> start scene " + this.scene.getTAG());
     }
 
     /**
@@ -92,8 +92,8 @@ public class Renderer extends JFrame{
          * Constructor. Creates a Canvas object to draw onto.
          */
         public Canvas() {
-            onScreen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            offScreen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            this.onScreen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            this.offScreen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         }
         
         /**
@@ -102,28 +102,28 @@ public class Renderer extends JFrame{
          */
         @Override
         public void paintComponent(Graphics g) {
-            offScreen.setColor(Color.black);
-            offScreen.fillRect(0, 0, width, height);
-            offScreen.setColor(Color.blue);
-            offScreen.drawLine(0, StaticValues.CANVAS_HEIGHT/2, StaticValues.CANVAS_WIDTH, StaticValues.CANVAS_HEIGHT/2);
-            offScreen.drawLine(StaticValues.CANVAS_WIDTH/2, 0, StaticValues.CANVAS_WIDTH/2, StaticValues.CANVAS_HEIGHT);
+            this.offScreen.setColor(Color.black);
+            this.offScreen.fillRect(0, 0, width, height);
+            this.offScreen.setColor(Color.blue);
+            this.offScreen.drawLine(0, StaticValues.CANVAS_HEIGHT/2, StaticValues.CANVAS_WIDTH, StaticValues.CANVAS_HEIGHT/2);
+            this.offScreen.drawLine(StaticValues.CANVAS_WIDTH/2, 0, StaticValues.CANVAS_WIDTH/2, StaticValues.CANVAS_HEIGHT);
             List<Component> components = scene.getComponents();
             for (Component component: components) {
                 Point componentLocation = component.getDrawPosition();
                 offScreen.drawImage(component.getImage(), componentLocation.x, componentLocation.y, null);
                 if (debug) {
-                    component.rect.draw(offScreen, Color.red); // DEBUG VIEW
+                    component.drawRect(offScreen, Color.red); // DEBUG VIEW
                 }
             }
             List<Button> buttons = scene.getButtons();
             for (Button button: buttons) {
                 Point buttonLocation = button.getDrawPosition();
-                offScreen.drawImage(button.getImage(), buttonLocation.x, buttonLocation.y, null);
+                this.offScreen.drawImage(button.getImage(), buttonLocation.x, buttonLocation.y, null);
                 if (debug) {
-                    button.rect.draw(offScreen, Color.red); // DEBUG VIEW
+                    button.drawRect(offScreen, Color.red); // DEBUG VIEW
                 }
             }
-            onScreen.drawImage(offScreenImage, 0, 0, null);
+            this.onScreen.drawImage(offScreenImage, 0, 0, null);
             g.drawImage(onScreenImage, 0, 0, null);
         }
     }

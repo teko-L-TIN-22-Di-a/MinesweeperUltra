@@ -79,7 +79,7 @@ public class Scene {
     public void update() {
         this.counter += 1;
 
-        for (Component component: components) {
+        for (Component component: this.components) {
             component.update();
         }
 

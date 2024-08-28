@@ -17,7 +17,7 @@ import src.scenes.SceneHandler;
  * @see SceneHandler
  */
 public class Gameloop {
-    private Renderer bobRoss;
+    private Renderer renderer;
     private Controller controller;
     private Menu menu;
     private SceneHandler sceneHandler;
@@ -26,10 +26,10 @@ public class Gameloop {
      * Sets up a Gameloop Object, initializes Renderer, Controller and Scene.
      */
     public Gameloop() {
-        bobRoss = new Renderer(true);
-        controller = new Controller();
-        menu = new Menu();
-        sceneHandler = new SceneHandler(menu);
+        this.renderer = new Renderer(true);
+        this.controller = new Controller();
+        this.menu = new Menu();
+        this.sceneHandler = new SceneHandler(menu);
     }
 
     /**
@@ -37,16 +37,16 @@ public class Gameloop {
      * and reacts to Game Events
      */
     public void start() {
-        bobRoss.setScene(menu);
-        sceneHandler.setScene(menu, SceneTag.NEW);
-        controller.setButtonList(menu.getButtons());
-        controller.setupListeners(bobRoss.canvas);
-        menu.start();
+        this.renderer.setScene(this.menu);
+        this.sceneHandler.setScene(this.menu, SceneTag.NEW);
+        this.controller.setButtonList(this.menu.getButtons());
+        this.controller.setupListeners(this.renderer.canvas);
+        this.menu.start();
 
         ActionListener updateTask = updateEvent -> {
             Scene activeScene = sceneHandler.getActive();
             updateScene(activeScene);
-            bobRoss.repaint();
+            this.renderer.repaint();
         };
 
         new Timer(60, updateTask).start();
@@ -54,15 +54,15 @@ public class Gameloop {
 
     private void updateScene(Scene activeScene) {
         Scene newScene = activeScene.getNewScene();
-        if (sceneHandler.sceneCheck(newScene)) {
-            sceneHandler.setScene(newScene, SceneTag.NEW);
-            sceneHandler.startNew();
-            bobRoss.setScene(sceneHandler.getActive());
-            controller.setButtonList(newScene.getButtons());
+        if (this.sceneHandler.sceneCheck(newScene)) {
+            this.sceneHandler.setScene(newScene, SceneTag.NEW);
+            this.sceneHandler.startNew();
+            this.renderer.setScene(this.sceneHandler.getActive());
+            this.controller.setButtonList(newScene.getButtons());
         }
-        Point mouseLocation = controller.getMousePos();
+        Point mouseLocation = this.controller.getMousePos();
         activeScene.updateMouseLocation(mouseLocation.x, mouseLocation.y);
         activeScene.update();
-        activeScene.setM1down(controller.getM1down());
+        activeScene.setM1down(this.controller.getM1down());
     }
 }

@@ -1,5 +1,7 @@
 package src.components;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
@@ -13,7 +15,7 @@ public class Component {
 
     private BufferedImage image;
     /** Rectangle to track size and location */
-    public Rectangle rect;
+    private Rectangle rect;
 
     /**
      * Creates a Component with size, location and Rectangle
@@ -23,7 +25,7 @@ public class Component {
      * @param y         y coordinate of the Component
      */
     public Component(int width, int height, int x, int y) {
-        rect = new Rectangle(width, height, x, y);
+        this.rect = new Rectangle(width, height, x, y);
     }
 
     /**
@@ -38,7 +40,7 @@ public class Component {
         setImage(image);
         int width = image.getWidth();
         int height = image.getHeight();
-        rect = new Rectangle(width, height, x, y);
+        this.rect = new Rectangle(width, height, x, y);
     }
 
     /**
@@ -58,10 +60,10 @@ public class Component {
 
     /**
      * Takes an image and stores it.
-     * @param newImage  new image to store
+     * @param image  new image to store
      */
-    public void setImage(BufferedImage newImage) {
-        image = newImage;
+    public void setImage(BufferedImage image) {
+        this.image = image;
     }
 
     /**
@@ -69,7 +71,11 @@ public class Component {
      * @return top left corner
      */
     public Point getDrawPosition() {
-        return rect.getCorner(Corners.TOP_LEFT);
+        return this.rect.getCorner(Corners.TOP_LEFT);
+    }
+
+    public void drawRect(Graphics2D graphics, Color color) {
+        rect.draw(graphics, color);
     }
 
     /**
@@ -77,16 +83,16 @@ public class Component {
      * @return location of the Component
      */
     public Point getLocation() {
-        return rect.getLocation();
+        return this.rect.getLocation();
     }
 
     /**
      * Takes coordinates for a new location and stores them 
-     * @param newX  new x coordinate for the Component
-     * @param newY  new y coordinate for the Component
+     * @param x  new x coordinate for the Component
+     * @param y  new y coordinate for the Component
      */
-    public void setLocation(int newX, int newY) {
-        rect.setLocation(newX, newY);
+    public void setLocation(int x, int y) {
+        this.rect.setLocation(x, y);
     }
 
     /**
@@ -110,12 +116,12 @@ public class Component {
     /**
      * Takes width and height to store in size.
      * Recalculates the Rectangle.
-     * @param newWidth  new width of the Component
-     * @param newHeight new height of the Component
+     * @param width  new width of the Component
+     * @param height new height of the Component
      */
-    public void setSize(int newWidth, int newHeight) {
+    public void setSize(int width, int height) {
         Point location = rect.getLocation();
-        rect.setSize(newWidth, newHeight);
+        this.rect.setSize(width, height);
         setLocation(location.x, location.y);
     }
 }
