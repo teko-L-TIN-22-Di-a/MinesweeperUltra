@@ -20,7 +20,7 @@ public class Menu extends Scene {
     public Menu() {
         super(true);
         setTAG("menu");
-        setBG(ImageMapping.MAP1);
+        setBG(ImageMapping.BG);
         //setBGM(SoundMapping.MENUBGM);
         int width = StaticValues.CANVAS_WIDTH;
         int height = StaticValues.CANVAS_HEIGHT;

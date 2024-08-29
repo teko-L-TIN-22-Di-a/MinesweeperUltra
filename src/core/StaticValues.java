@@ -14,9 +14,9 @@ public class StaticValues {
     /** name of the gamewindow */
     public static String GAMENAME = "Minesweeper Ultra";
     /** width of the gamewindow */
-    public static int CANVAS_WIDTH = 500;
+    public static int CANVAS_WIDTH = 800;
     /** height of the gamewindow */
-    public static int CANVAS_HEIGHT = 1080;
+    public static int CANVAS_HEIGHT = 500;
     /** Framerate */
     public static int UPDATE_PERIOD = 60;
 

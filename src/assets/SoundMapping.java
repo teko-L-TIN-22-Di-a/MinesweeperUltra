@@ -9,5 +9,5 @@ public class SoundMapping {
     public SoundMapping() {}
 
     /** Directory inside assets where sounds are stored */
-    public static String DIR = "resources/sounds/";
+    public static String DIR = "../../resources/sounds/";
 }

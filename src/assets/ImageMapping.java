@@ -9,8 +9,8 @@ public class ImageMapping {
     public ImageMapping() {}
 
     /** Directory inside assets where images are stored */
-    public static String DIR = "resource/images/";
+    public static String DIR = "../../resources/images/";
     
     /** Image filename for specified Map */
-    public static String MAP1 = "Map1.png";
+    public static String BG = "bg.png";
 }
