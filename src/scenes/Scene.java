@@ -32,7 +32,9 @@ public class Scene {
      * Properties from these lists will be drawn in the Renderer.
      * @param isMenu determines, if the Scene is considered a Menu.
      */
-    public Scene(boolean isMenu) {
+    public Scene(boolean isMenu, String TAG) {
+        System.out.println("> start scene " + TAG);
+        setTAG(TAG);
         this.bgm = null;
         this.counter = 0;
         this.components = new ArrayList<>();
