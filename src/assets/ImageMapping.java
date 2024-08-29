@@ -6,7 +6,7 @@ package src.assets;
 public class ImageMapping {
     
     /** Empty Constructor */
-    public ImageMapping() {}
+    private ImageMapping() {}
 
     /** Directory inside assets where images are stored */
     public static String DIR = "../../resources/images/";

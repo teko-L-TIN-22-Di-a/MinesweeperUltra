@@ -21,7 +21,7 @@ public class Loader {
     /** 
      * Initializes the Loader without any specific configuration.
      */
-    public Loader() {
+    private Loader() {
         // Initialization code can go here if needed
     }
     

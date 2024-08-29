@@ -6,7 +6,7 @@ package src.assets;
 public class SoundMapping {
     
     /** Empty Constructor */
-    public SoundMapping() {}
+    private SoundMapping() {}
 
     /** Directory inside assets where sounds are stored */
     public static String DIR = "../../resources/sounds/";

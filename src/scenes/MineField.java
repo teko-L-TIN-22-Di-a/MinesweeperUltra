@@ -21,7 +21,7 @@ public class MineField extends Scene {
         super(false);
         setTAG("minefield");
 
-        setBG(ImageMapping.MAP1);
+        //setBG(ImageMapping.MAP1);
         //setBGM(SoundMapping.LEVEL1BGM);
     }
 }
