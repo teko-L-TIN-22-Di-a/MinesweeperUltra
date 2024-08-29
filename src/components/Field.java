@@ -13,7 +13,7 @@ public class Field extends Component{
         super(width, height, x, y);
         this.state = FieldState.UNKNOWN;
         this.isMine = false;
-        this.text = new Textfield(x, y, null);
+        this.text = new Textfield(x, y, " ");
     }
 
     public void reveilAction() {
