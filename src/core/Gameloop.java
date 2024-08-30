@@ -40,6 +40,7 @@ public class Gameloop {
         this.renderer.setScene(this.menu);
         this.sceneHandler.setScene(this.menu, SceneTag.NEW);
         this.controller.setButtonList(this.menu.getButtons());
+        this.controller.setFieldList(this.menu.getFields());
         this.controller.setupListeners(this.renderer.canvas);
         this.menu.start();
 
@@ -59,10 +60,10 @@ public class Gameloop {
             this.sceneHandler.startNew();
             this.renderer.setScene(this.sceneHandler.getActive());
             this.controller.setButtonList(newScene.getButtons());
+            this.controller.setFieldList(newScene.getFields());
         }
         Point mouseLocation = this.controller.getMousePos();
         activeScene.updateMouseLocation(mouseLocation.x, mouseLocation.y);
         activeScene.update();
-        activeScene.setM1down(this.controller.getM1down());
     }
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import src.components.Button;
+import src.components.Field;
 
 /**
  * Handles Player input
@@ -22,7 +23,8 @@ public class Controller extends JPanel{
     /** tracks mouse position */
     private final MouseTracker tracker;
     /** list of Buttons to check */
-    private List<Button> buttonlist;
+    private List<Button> buttonList;
+    private List<Field> fieldList;
 
     /**
      * Creates a Controller object.
@@ -43,19 +45,15 @@ public class Controller extends JPanel{
     }
 
     /**
-     * Indicates, if the Mouse Button 1 is currently beeing pressed or not.
-     * @return true, if the Button M1 is beeing pressed
-     */
-    public boolean getM1down() {
-        return this.handler.getM1down();
-    }
-
-    /**
      * Takes a list of Buttons and stores it in the buttonList.
      * @param buttonList    list to store
      */
     public void setButtonList(List<Button> buttonList) {
-        this.buttonlist = buttonList;
+        this.buttonList = buttonList;
+    }
+
+    public void setFieldList(List<Field> fieldList) {
+        this.fieldList = fieldList;
     }
 
     /**
@@ -74,32 +72,22 @@ public class Controller extends JPanel{
      */
     private class MouseHandler extends MouseAdapter {
 
-        boolean m1down;
-
         @Override
-        public void mousePressed(MouseEvent e) {
+        public void mouseClicked(MouseEvent e) {
+            Point mousePosition = tracker.getLocation();
             if (e.getButton() == 1) {
-                this.m1down = true;
-            }
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            if (e.getButton() == 1) {
-                for (Button b: buttonlist) {
-                    Point mousePosition = tracker.getLocation();
+                for (Button b: buttonList) {
                     b.actionCheck(mousePosition);
                 }
-                this.m1down = false;
+                for (Field f: fieldList) {
+                    f.reveilAction(mousePosition);
+                }
             }
-        }
-
-        /**
-         * Indicates, if the Mouse Button 1 is currently beeing pressed or not.
-         * @return true, if the Button M1 is beeing pressed
-         */
-        public boolean getM1down() {
-            return this.m1down;
+            else if (e.getButton() == 3) {
+                for (Field f: fieldList) {
+                    f.flagAction(mousePosition);
+                }
+            }
         }
     }
 

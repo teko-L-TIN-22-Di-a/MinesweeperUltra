@@ -20,7 +20,6 @@ import src.core.StaticValues;
 public class MineField extends Scene {
     
     private Grid grid;
-    private Field[] fields;
 
     /**
      * Sets up the Level1 scene.
@@ -48,15 +47,17 @@ public class MineField extends Scene {
         //setBGM(SoundMapping.LEVEL1BGM);
         
         grid = new Grid(width, height, mineCount);
-        fields = new Field[width*height];
         int fieldSide = 30;
-        int index = 0;
 
         for (int i = 0; i<height; i++) {
             for (int j = 0; j<width; j++) {
                 Field newField = new Field(fieldSide, fieldSide, i*fieldSide+300, j*fieldSide+25);
-                fields[index] = newField;
-                index += 1;
+                int fieldValue = grid.getField(i, j);
+                newField.setValue(fieldValue);
+                if (fieldValue == 9) {
+                    newField.setMine();
+                }
+                addField(newField);
                 registerComponent(newField);
             }
         }

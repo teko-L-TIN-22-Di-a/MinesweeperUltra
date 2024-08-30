@@ -43,6 +43,10 @@ public class Component {
         this.rect = new Rectangle(width, height, x, y);
     }
 
+    public boolean collidePoint(Point point) {
+        return rect.collidePoint(point);
+    }
+
     /**
      * Base for update methods of extending subclasses.
      */

@@ -1,5 +1,7 @@
 package src.core;
 
+import java.awt.Color;
+
 /**
  * Dataclass to store fixed values
  */
@@ -20,10 +22,23 @@ public class StaticValues {
     /** Framerate */
     public static int UPDATE_PERIOD = 60;
 
+    public static Color[] COLORS = {
+        Color.GRAY,
+        Color.BLUE,
+        Color.GREEN,
+        Color.YELLOW,
+        Color.ORANGE,
+        Color.MAGENTA,
+        Color.PINK,
+        Color.CYAN,
+        Color.WHITE,
+        Color.RED
+    };
+
     public static enum FieldState {
         UNKNOWN,
         FLAGGED,
-        REVEILED,
+        REVEILED
     }
 
     // Enumerations for Selections
@@ -36,7 +51,7 @@ public class StaticValues {
         /** Bottom Left corner */
         BOTTOM_RIGHT,
         /** Bottom Right corner */
-        BOTTOM_LEFT,
+        BOTTOM_LEFT
     }
 
     /** Available Tags for a Scene */
@@ -46,6 +61,6 @@ public class StaticValues {
         /** Tag for previous Scene */
         PREVIOUS,
         /** Tag for new Scenes */
-        NEW,
+        NEW
     }
 }

@@ -20,46 +20,6 @@ public class Button extends Component{
     private BufferedImage image;
 
     /**
-     * Creates a Button with size and location.
-     * @param x         x coordinate for the location
-     * @param y         y coordinate for the location
-     * @param width     width of the Button
-     * @param height    height of the Button
-     */
-    public Button(int width, int height, int x, int y) {
-        super(width, height, x, y);
-        setUpStandardButton(width, height);
-    }
-
-    /**
-     * Creates a Button with size, location and text.
-     * @param x         x coordinate for the location
-     * @param y         y coordinate for the location
-     * @param width     width of the Button
-     * @param height    height of the Button
-     * @param text      text displayed on the Button
-     */
-    public Button(int width, int height, int x, int y, String text) {
-        super(width, height, x, y);
-        setUpStandardButton(width, height);
-        updateLabel(text);
-    }
-
-    /**
-     * Creates a Button with size, location and color.
-     * @param x         x coordinate for the location
-     * @param y         y coordinate for the location
-     * @param width     width of the Button
-     * @param height    height of the Button
-     * @param color     color of the Button
-     */
-    public Button(int width, int height, int x, int y, Color color) {
-        super(width, height, x, y);
-        setUpStandardButton(width, height);
-        fill(color);
-    }
-
-    /**
      * Creates a Button with size, location, text and color.
      * @param x         x coordinate for the location
      * @param y         y coordinate for the location
@@ -90,25 +50,6 @@ public class Button extends Component{
         int height = image.getHeight();
         setSize(width, height);
         setImage(image);
-    }
-
-    /**
-     * Creates a Button with location, text and image.
-     * Loads the image from app/src/resources/assets.
-     * Size is taken from the image.
-     * @param x         x coordinate for the location
-     * @param y         y coordinate for the location
-     * @param imageName image of the Button
-     * @param text      text displayed on the Button
-     */
-    public Button(int x, int y, String imageName, String text) {
-        super(1, 1, x, y);
-        image = Loader.loadImage(imageName);
-        int width = image.getWidth();
-        int height = image.getHeight();
-        setSize(width, height);
-        setImage(image);
-        updateLabel(text);
     }
 
     /**
@@ -163,12 +104,7 @@ public class Button extends Component{
      * @param mousePosition position to compare to the Button
      */
     public void actionCheck(Point mousePosition) {
-        if (
-            mousePosition.x >= getDrawPosition().x &&
-            mousePosition.x <= getDrawPosition().x + getWidth() &&
-            mousePosition.y >= getDrawPosition().y &&
-            mousePosition.y <= getDrawPosition().y + getHeight()
-        ) {
+        if (collidePoint(mousePosition)) {
             action();
         }
     }

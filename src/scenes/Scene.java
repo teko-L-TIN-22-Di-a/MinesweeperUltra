@@ -9,6 +9,7 @@ import javax.sound.sampled.Clip;
 import src.assets.Loader;
 import src.components.Button;
 import src.components.Component;
+import src.components.Field;
 
 /**
  * Baseclass for any Scene.
@@ -19,7 +20,8 @@ import src.components.Component;
 public class Scene {
     private List<Component> components;
     private List<Button> buttons;
-    private boolean menu, m1down, active;
+    private List<Field> fields;
+    private boolean menu, active;
     private String TAG;
     private Scene newScene;
     private Point mousepoint;
@@ -39,6 +41,7 @@ public class Scene {
         this.counter = 0;
         this.components = new ArrayList<>();
         this.buttons = new ArrayList<>();
+        this.fields = new ArrayList<>();
         this.menu = isMenu;
 
         // Fills the newScene Variable with itself to indicate, that the scene does not have to be changed
@@ -84,18 +87,6 @@ public class Scene {
         for (Component component: this.components) {
             component.update();
         }
-
-        if (!this.m1down) {
-            // add code for behaviour when a Mousebutton1 is up!
-        }
-    }
-
-    /**
-     * Indicates, if the Mouse Button 1 is currently beeing pressed or not.
-     * @param state true, if the Button M1 is beeing pressed
-     */
-    public void setM1down(boolean state) {
-        this.m1down = state;
     }
 
     /**
@@ -243,5 +234,13 @@ public class Scene {
      */
     public List<Button> getButtons() {
         return this.buttons;
+    }
+
+    public void addField(Field field) {
+        fields.add(field);
+    }
+
+    public List<Field> getFields() {
+        return this.fields;
     }
 }

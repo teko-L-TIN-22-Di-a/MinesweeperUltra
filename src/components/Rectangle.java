@@ -53,19 +53,17 @@ public class Rectangle {
      * @return      true, if the point is inside the Rectangle object
      */
     public boolean collidePoint(Point point) {
-        if  (this.topLeft.x > point.x) {
+        if (
+            point.x >= topLeft.x &&
+            point.x <= bottomRight.x &&
+            point.y >= topLeft.y &&
+            point.y <= bottomRight.y
+        ) {
+            return true;
+        }
+        else {
             return false;
         }
-        else if  (this.topRight.y > point.y) {
-            return false;
-        }
-        else if  (this.bottomRight.x < point.x) {
-            return false;
-        }
-        else if  (this.bottomLeft.y < point.y) {
-            return false;
-        }
-        else {return true;}
     }
 
     /**

@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 public class Textfield extends Component{
 
     private String text;
+    private Color color;
 
     /**
      * Takes x and y coordinate and a String to create a Component with text.
@@ -24,6 +25,10 @@ public class Textfield extends Component{
         BufferedImage image = createImage();
         setImage(image);
         setSize(image.getWidth(), image.getHeight());
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public void setText(String text) {
@@ -43,7 +48,7 @@ public class Textfield extends Component{
         gTMP.dispose();
         BufferedImage image = new BufferedImage(fm.stringWidth(text), fm.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics g = image.getGraphics();
-        g.setColor(Color.BLACK);
+        g.setColor(color);
         g.drawString(text, 0, g.getFontMetrics().getAscent());
         g.dispose();
         return image;
