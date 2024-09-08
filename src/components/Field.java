@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import src.core.StaticValues;
 import src.core.StaticValues.FieldState;
@@ -15,6 +16,8 @@ public class Field extends Component{
     private int value;
     private Textfield text;
     private Color color;
+    private Point matrixLocation;
+    private List<Field> adjacentFields;
     
     public Field(int width, int height, int x, int y) {
         super(width, height, x, y);
@@ -26,6 +29,10 @@ public class Field extends Component{
         this.setText(" ");
     }
 
+    /**
+     * 
+     * @param text
+     */
     private void setText(String text) {
         this.text.setText(text);
         BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -42,6 +49,14 @@ public class Field extends Component{
         g.dispose();
     }
 
+    public void setMatrixLocation(int x, int y) {
+        matrixLocation = new Point(x, y);
+    }
+
+    public Point getMatrixLocation() {
+        return matrixLocation;
+    }
+
     public void setMine() {
         this.isMine = true;
     }
@@ -50,22 +65,42 @@ public class Field extends Component{
         this.value = value;
     }
 
+    public int getValue() {
+        return value;
+    }
+
     private void setColor() {
         this.color = StaticValues.COLORS[value];
+    }
+
+    public void setAdjacentFields(List<Field> af) {
+        adjacentFields = af;
+    }
+
+    public List<Field> getAdjacentFields() {
+        return adjacentFields;
+    }
+
+    private void reveil() {
+        this.state = FieldState.REVEILED;
+        this.setColor();
     }
 
     public void reveilAction(Point mouseLocation) {
         if (collidePoint(mouseLocation)) {
             if (this.state == FieldState.UNKNOWN) {
-                this.state = FieldState.REVEILED;
-                this.setColor();
+                reveil();
                 if (this.isMine) {
                     this.setText("O");
                     System.out.println("BOOM!");
                 }
                 else {
                     this.setText("" + value);
-                    System.out.println(value);
+                    if (value == 0) {
+                        for (Field f: adjacentFields) {
+                            f.reveilAction(mouseLocation);
+                        }
+                    }
                 }
             }
         }
@@ -83,7 +118,7 @@ public class Field extends Component{
                 this.state = FieldState.UNKNOWN;
                 this.setText(" ");
                 System.err.println("unflagged field");
-        }
+            }
         }
     }
 }

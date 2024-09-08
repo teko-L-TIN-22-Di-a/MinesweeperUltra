@@ -2,8 +2,6 @@ package src.scenes;
 
 import java.awt.Color;
 
-import src.assets.ImageMapping;
-import src.assets.SoundMapping;
 import src.core.StaticValues;
 import src.components.Button;
 
@@ -19,8 +17,6 @@ public class Menu extends Scene {
      */
     public Menu() {
         super(true, "menu");
-        //setBG(ImageMapping.BG);
-        //setBGM(SoundMapping.MENUBGM);
         int width = StaticValues.CANVAS_WIDTH;
         int height = StaticValues.CANVAS_HEIGHT;
         Button start = new Button(100, 50, width/2, height/2 - 100, "START", Color.GRAY);

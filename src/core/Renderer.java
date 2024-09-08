@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 
 import src.components.Button;
 import src.components.Component;
+import src.components.Field;
 import src.scenes.Scene;
 
 /**
@@ -112,6 +113,14 @@ public class Renderer extends JFrame{
                 offScreen.drawImage(component.getImage(), componentLocation.x, componentLocation.y, null);
                 if (debug) {
                     component.drawRect(offScreen, Color.red); // DEBUG VIEW
+                }
+            }
+            List<Field> fields = scene.getFields();
+            for (Field field: fields) {
+                Point componentLocation = field.getDrawPosition();
+                offScreen.drawImage(field.getImage(), componentLocation.x, componentLocation.y, null);
+                if (debug) {
+                    field.drawRect(offScreen, Color.red); // DEBUG VIEW
                 }
             }
             List<Button> buttons = scene.getButtons();

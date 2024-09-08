@@ -237,7 +237,7 @@ public class Scene {
     }
 
     public void addField(Field field) {
-        fields.add(field);
+        this.fields.add(field);
     }
 
     public List<Field> getFields() {

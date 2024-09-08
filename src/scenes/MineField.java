@@ -3,8 +3,6 @@ package src.scenes;
 import java.awt.Color;
 import java.awt.Point;
 
-import src.assets.ImageMapping;
-import src.assets.SoundMapping;
 import src.components.Button;
 import src.components.Field;
 import src.components.Grid;
@@ -42,24 +40,11 @@ public class MineField extends Scene {
 
         registerButton(menu);
         registerButton(exit);
-
-        //setBG(ImageMapping.MAP1);
-        //setBGM(SoundMapping.LEVEL1BGM);
         
         grid = new Grid(width, height, mineCount);
-        int fieldSide = 30;
 
-        for (int i = 0; i<height; i++) {
-            for (int j = 0; j<width; j++) {
-                Field newField = new Field(fieldSide, fieldSide, i*fieldSide+300, j*fieldSide+25);
-                int fieldValue = grid.getField(i, j);
-                newField.setValue(fieldValue);
-                if (fieldValue == 9) {
-                    newField.setMine();
-                }
-                addField(newField);
-                registerComponent(newField);
-            }
+        for (Field f: grid.getAllFields()) {
+            addField(f);
         }
     }
 }

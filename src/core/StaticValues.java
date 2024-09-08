@@ -22,6 +22,8 @@ public class StaticValues {
     /** Framerate */
     public static int UPDATE_PERIOD = 60;
 
+    public static int FIELDSIZE = 30;
+
     public static Color[] COLORS = {
         Color.GRAY,
         Color.BLUE,

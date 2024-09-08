@@ -1,23 +1,36 @@
 package src.components;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import src.core.StaticValues;
 
 public class Grid {
 
     private int[][] grid;
     private Random randy = new Random();
     private Point size;
+    private List<List<Field>> fieldMatrix;
 
     public Grid(int width, int height, int mineCount) {
         grid = new int[width][height];
         size = new Point(width, height);
+        fieldMatrix = new ArrayList<>();
+        int i;
+        for (i=0; i<height; i++) {
+            List<Field> line = new ArrayList<>();
+            fieldMatrix.add(line);
+        }
         setMines(mineCount);
         setMineCounts();
+        createFields();
+        setAdjacentFields();
         print();
     }
 
-    public int getField(int x, int y) {
+    public int getValue(int x, int y) {
         return grid[y][x];
     }
 
@@ -70,6 +83,71 @@ public class Grid {
             }
         }
         return count;
+    }
+
+    private void createFields() {
+        for (int i = 0; i<size.y; i++) {
+            for (int j = 0; j<size.x; j++) {
+                int fieldSize = StaticValues.FIELDSIZE;
+                Field newField = new Field(fieldSize, fieldSize, i*fieldSize+300, j*fieldSize+25);
+                int fieldValue = getValue(i, j);
+                newField.setValue(fieldValue);
+                newField.setMatrixLocation(j, i);
+                if (fieldValue == 9) {
+                    newField.setMine();
+                }
+                fieldMatrix.get(i).add(newField);
+            }
+        }
+    }
+
+    private void setAdjacentFields() {
+        ///fieldMatrix.stream().map(height -> {height.})
+        for (List<Field> fields: fieldMatrix) {
+            for (Field f: fields) {
+                if (f.getValue()==0) {
+                    Point ml = f.getMatrixLocation();
+                    List<Field> af = getAdjacentFields(ml.x, ml.y);
+                    f.setAdjacentFields(af);
+                }
+            }
+        }
+    }
+
+    private List<Field> getAdjacentFields(int x, int y) {
+        List<Field> fields = new ArrayList<>();
+        int i;
+        for (i=-1; i<=1; i++) {
+            int j;
+            for (j=-1; j<=1; j++) {
+                if (i!=0 && j!=0) {
+                    if (
+                        x+i>=0 &&
+                        x+i<size.x &&
+                        y+j>=0 &&
+                        y+j<size.y
+                    ) {
+                        Field field = getField(x+i, y+j);
+                        fields.add(field);
+                    }
+                }
+            }
+        }
+        return fields;
+    }
+
+    private Field getField(int x, int y) {
+        return fieldMatrix.get(y).get(x);
+    }
+
+    public List<Field> getAllFields() {
+        List<Field> allFields = new ArrayList<>();
+        for (List<Field> fl: fieldMatrix) {
+            for (Field f: fl) {
+                allFields.add(f);
+            }
+        }
+        return allFields;
     }
 
     public void print() {
