@@ -21,9 +21,12 @@ public class StaticValues {
     public static int CANVAS_HEIGHT = 500;
     /** Framerate */
     public static int UPDATE_PERIOD = 60;
-
+    /** Lenght of the side of the field square */
     public static int FIELDSIZE = 30;
-
+    /**
+     * Colors used for the Fields. The sequence is relevant and
+     * the index corresponds to the Field value.
+     */
     public static Color[] COLORS = {
         Color.LIGHT_GRAY,
         Color.BLUE,
@@ -36,7 +39,7 @@ public class StaticValues {
         Color.BLACK,
         Color.RED
     };
-
+    /** Possible states a Field can have */
     public static enum FieldState {
         UNKNOWN,
         FLAGGED,

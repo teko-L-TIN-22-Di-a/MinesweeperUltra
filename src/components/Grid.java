@@ -7,6 +7,15 @@ import java.util.Random;
 
 import src.core.StaticValues;
 
+/**
+ * The Grid Class is intended to set the structure for the Fields. It provides
+ * functionalities to create Fields and place them in a Matrix and to keep
+ * references to the surrounding Fields.  
+ * First a value matrix is generated. Then Mines will be set per random inside the Grid.
+ * After that, the values around the mines are calculated.
+ * At the end, for every value in the value matrix, a Field will be added to the fieldMatrix.
+ * @see Field
+ */
 public class Grid {
 
     private int[][] grid;
@@ -14,6 +23,14 @@ public class Grid {
     private Point size;
     private List<List<Field>> fieldMatrix;
 
+    /**
+     * Takes width, height and a mine count to create a Grid Object.
+     * Creates a value and Field matrix, sets mines and values, creates Fields
+     * and creates references to the surrounding Fields.
+     * @param width width of the Grid
+     * @param height height of the Grid
+     * @param mineCount amount of mines in the Grid
+     */
     public Grid(int width, int height, int mineCount) {
         grid = new int[width][height];
         size = new Point(width, height);
@@ -30,14 +47,32 @@ public class Grid {
         print();
     }
 
+    /**
+     * Returns a value from the value matrix.
+     * @param x x location in the value matrix
+     * @param y y location in the value matrix
+     * @return value of position xy in the value matrix
+     */
     public int getValue(int x, int y) {
         return grid[y][x];
     }
 
+    /**
+     * Returns a Point Object representing width and height of the
+     * value matrix as x and y.
+     * @return size of the value matrix as x and y
+     */
     public Point getSize() {
         return size;
     }
 
+    /**
+     * Takes an amount of mines and creates random coordinates
+     * inside the value matrix to set to 9 (indicator for mine).
+     * Before setting the value, the coordinate is checked, if its value
+     * is already 9. If so, another coordinate is generated.
+     * @param mineCount
+     */
     private void setMines(int mineCount) {
         int i;
         for (i=0; i<mineCount; i++) {
@@ -54,6 +89,10 @@ public class Grid {
         }
     }
 
+    /**
+     * Iterates through all the fields in the value matrix, gets the count
+     * of 9 (mine) around the field and sets the value of the field to that count.
+     */
     private void setMineCounts() {
         for (int y=0; y<grid.length; y++) {
             for (int x=0; x<grid[y].length; x++) {
@@ -64,6 +103,14 @@ public class Grid {
         }
     }
 
+    /**
+     * Takes x and y coordinates and checks the value matrix for all fields in range
+     * x-1 to x+1 and y-1 to y+1 for mines. The field xy will not be counted.
+     * Returns the count of mines in all adjacent fields.
+     * @param x x coordinate in the value matrix
+     * @param y y coordinate in the value matrix
+     * @return amount of mines in the adjacent fields
+     */
     private int getMineCount(int x,int y) {
         int count = 0;
         for (int i = -1; i <= 1; i++) {
@@ -85,6 +132,9 @@ public class Grid {
         return count;
     }
 
+    /**
+     * Creates Field Objects for every field in value matrix. Adds every new field to the Field matrix
+     */
     private void createFields() {
         for (int i = 0; i<size.y; i++) {
             for (int j = 0; j<size.x; j++) {
@@ -93,14 +143,14 @@ public class Grid {
                 int fieldValue = getValue(i, j);
                 newField.setValue(fieldValue);
                 newField.setMatrixLocation(j, i);
-                if (fieldValue == 9) {
-                    newField.setMine();
-                }
                 fieldMatrix.get(i).add(newField);
             }
         }
     }
 
+    /**
+     * 
+     */
     private void setAdjacentFields() {
         ///fieldMatrix.stream().map(height -> {height.})
         for (List<Field> fields: fieldMatrix) {

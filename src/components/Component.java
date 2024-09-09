@@ -43,6 +43,11 @@ public class Component {
         this.rect = new Rectangle(width, height, x, y);
     }
 
+    /**
+     * Takes a point and calls the collidepoint method of the Rectangle Object.
+     * @param point Point to be checked for collision with this Objects Rectangle.
+     * @return True, if the Point collides with this Objects Rectangle.
+     */
     public boolean collidePoint(Point point) {
         return rect.collidePoint(point);
     }
@@ -78,6 +83,11 @@ public class Component {
         return this.rect.getCorner(Corners.TOP_LEFT);
     }
 
+    /**
+     * Takes a Graphic and draws this Objects Rectangle onto the Graphic.
+     * @param graphics Graphic to draw the Rectangle onto.
+     * @param color Color that the Rectangle will be drawn in.
+     */
     public void drawRect(Graphics2D graphics, Color color) {
         rect.draw(graphics, color);
     }
