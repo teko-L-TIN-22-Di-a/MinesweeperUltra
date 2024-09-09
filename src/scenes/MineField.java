@@ -36,15 +36,42 @@ public class MineField extends Scene {
         Button exit = new Button(100, 50, windowSize.x-125, 25 , "EXIT", Color.GRAY);
         exit.setAction(() -> {
             System.exit(0);
+        });        
+        Button action1 = new Button(100, 50, 25, windowSize.y/2 - 75, "ACTION1", Color.GRAY);
+        action1.setAction(() -> {
+            action1();
+        });
+        Button action2 = new Button(100, 50, 25, windowSize.y/2 , "ACTION2", Color.GRAY);
+        action2.setAction(() -> {
+            action2();
+        });
+        Button action3 = new Button(100, 50, 25, windowSize.y/2 + 75 , "ACTION3", Color.GRAY);
+        action3.setAction(() -> {
+            action3();
         });
 
         registerButton(menu);
         registerButton(exit);
+        registerButton(action1);
+        registerButton(action2);
+        registerButton(action3);
         
         grid = new Grid(width, height, mineCount);
 
         for (Field f: grid.getAllFields()) {
             addField(f);
         }
+    }
+
+    private void action1() {
+        System.out.println("Execute Action 1!");
+    }
+
+    private void action2() {
+        System.out.println("Execute Action 2!");
+    }
+
+    private void action3() {
+        System.out.println("Execute Action 3!");
     }
 }

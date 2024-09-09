@@ -25,15 +25,15 @@ public class StaticValues {
     public static int FIELDSIZE = 30;
 
     public static Color[] COLORS = {
-        Color.GRAY,
+        Color.LIGHT_GRAY,
         Color.BLUE,
         Color.GREEN,
-        Color.YELLOW,
         Color.ORANGE,
+        Color.YELLOW,
         Color.MAGENTA,
         Color.PINK,
         Color.CYAN,
-        Color.WHITE,
+        Color.BLACK,
         Color.RED
     };
 

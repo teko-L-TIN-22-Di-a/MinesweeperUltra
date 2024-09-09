@@ -25,7 +25,7 @@ public class Field extends Component{
         this.isMine = false;
         this.text = new Textfield(x, y, " ");
         this.text.setColor(Color.WHITE);
-        this.color = Color.LIGHT_GRAY;
+        this.color = Color.GRAY;
         this.setText(" ");
     }
 
@@ -115,11 +115,13 @@ public class Field extends Component{
             this.color = StaticValues.COLORS[0];
             if (this.state == FieldState.UNKNOWN) {
                 this.state = FieldState.FLAGGED;
+                this.color = Color.DARK_GRAY;
                 this.setText("F");
                 System.err.println("flagged field");
             }
             else if (this.state == FieldState.FLAGGED) {
                 this.state = FieldState.UNKNOWN;
+                this.color = Color.GRAY;
                 this.setText(" ");
                 System.err.println("unflagged field");
             }
