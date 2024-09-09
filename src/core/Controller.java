@@ -80,7 +80,7 @@ public class Controller extends JPanel{
                     b.actionCheck(mousePosition);
                 }
                 for (Field f: fieldList) {
-                    f.reveilAction(mousePosition);
+                    f.action(mousePosition);
                 }
             }
             else if (e.getButton() == 3) {

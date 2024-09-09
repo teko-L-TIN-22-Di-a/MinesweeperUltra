@@ -120,16 +120,17 @@ public class Grid {
         for (i=-1; i<=1; i++) {
             int j;
             for (j=-1; j<=1; j++) {
-                if (i!=0 && j!=0) {
-                    if (
-                        x+i>=0 &&
-                        x+i<size.x &&
-                        y+j>=0 &&
-                        y+j<size.y
-                    ) {
-                        Field field = getField(x+i, y+j);
-                        fields.add(field);
-                    }
+                if (i==0 && j==0) {
+                    continue;
+                }
+                if (
+                    x+i>=0 &&
+                    x+i<size.x &&
+                    y+j>=0 &&
+                    y+j<size.y
+                ) {
+                    Field field = getField(x+i, y+j);
+                    fields.add(field);
                 }
             }
         }

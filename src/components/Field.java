@@ -86,20 +86,24 @@ public class Field extends Component{
         this.setColor();
     }
 
-    public void reveilAction(Point mouseLocation) {
+    public void action(Point mouseLocation) {
         if (collidePoint(mouseLocation)) {
-            if (this.state == FieldState.UNKNOWN) {
-                reveil();
-                if (this.isMine) {
-                    this.setText("O");
-                    System.out.println("BOOM!");
-                }
-                else {
-                    this.setText("" + value);
-                    if (value == 0) {
-                        for (Field f: adjacentFields) {
-                            f.reveilAction(mouseLocation);
-                        }
+            reveilAction();
+        }
+    }
+
+    public void reveilAction() {
+        if (this.state == FieldState.UNKNOWN) {
+            reveil();
+            if (this.isMine) {
+                this.setText("O");
+                System.out.println("BOOM!");
+            }
+            else {
+                this.setText("" + value);
+                if (value == 0) {
+                    for (Field f: adjacentFields) {
+                        f.reveilAction();
                     }
                 }
             }
