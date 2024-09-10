@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.sound.sampled.Clip;
 
@@ -14,7 +15,10 @@ import src.assets.SoundMapping;
 import src.components.Button;
 import src.components.Field;
 import src.components.Grid;
+import src.components.Textfield;
 import src.core.StaticValues;
+import src.core.StaticValues.FieldState;
+import src.core.StaticValues.Mode;
 
 
 /**
@@ -27,12 +31,17 @@ public class MineField extends Scene {
     
     private Grid grid;
     private int mineCount;
-    private int fieldCount;
-    private int endCount;
+    private int fieldCount, reveiledFields;
+    private int sleepCounter;
+    private int endCount, shield;
     private boolean end;
     private boolean removeEndscreenImage;
+    private Mode mode, previousMode;
     private Button removeEndscreen;
     private List<Button> otherButtons;
+    private List<Field> truesightFields;
+    private Field lastField;
+    private Textfield shields;
 
     /**
      * Takes a width, height and mine count to create a Minefield Scene.  
@@ -49,9 +58,19 @@ public class MineField extends Scene {
         this.mineCount = mineCount;
         this.fieldCount = width*height;
         this.removeEndscreenImage = false;
+        this.reveiledFields = 0;
+        this.sleepCounter = 0;
         this.endCount = 0;
+        this.shield = 0;
+        this.truesightFields = null;
+        this.lastField = null;
         this.otherButtons = new ArrayList<>();
+        this.mode = Mode.NEUTRAL;
+        this.shields = new Textfield(25, 200, "" + this.shield);
+        this.shields.setColor(Color.WHITE);
         setBGM(SoundMapping.MINEFIELD);
+
+        registerComponent(this.shields);
 
         Button menu = new Button(100, 50, 25, 25, "MENU", Color.GRAY);
         menu.setAction(() -> {
@@ -62,17 +81,18 @@ public class MineField extends Scene {
         exit.setAction(() -> {
             System.exit(0);
         });        
-        Button action1 = new Button(100, 50, 25, windowSize.y/2 - 75, "ACTION1", Color.GRAY);
+        Button action1 = new Button(100, 50, 25, windowSize.y/2 - 75, "FIND SAFEZONE", Color.GRAY);
         action1.setAction(() -> {
-            action1();
+            setMode(Mode.SAFEZONE);
         });
-        Button action2 = new Button(100, 50, 25, windowSize.y/2 , "ACTION2", Color.GRAY);
+        Button action2 = new Button(100, 50, 25, windowSize.y/2 , "SHIELD", Color.GRAY);
         action2.setAction(() -> {
-            action2();
+            this.shield = 4;
+            this.shields.setText("" + (this.shield-1));
         });
-        Button action3 = new Button(100, 50, 25, windowSize.y/2 + 75 , "ACTION3", Color.GRAY);
+        Button action3 = new Button(100, 50, 25, windowSize.y/2 + 75 , "TRUESIGHT", Color.GRAY);
         action3.setAction(() -> {
-            action3();
+            setMode(Mode.TRUESIGHT);
         });
 
         BufferedImage image = Loader.loadImage(ImageMapping.LOSE);
@@ -106,22 +126,24 @@ public class MineField extends Scene {
     /**
      * Action for the first special Ability.
      */
-    private void action1() {
-        System.out.println("Execute Action 1!");
+    private void setMode(Mode mode) {
+        if (this.mode != Mode.NEUTRAL) {
+            this.mode = Mode.NEUTRAL;
+        }
+        else {
+            this.mode = mode;
+        }
     }
 
-    /**
-     * Action for the second special Ability.
-     */
-    private void action2() {
-        System.out.println("Execute Action 2!");
+    private void setModeNeutral() {
+        this.mode = Mode.NEUTRAL;
     }
 
-    /**
-     * Action for the third special Ability.
-     */
-    private void action3() {
-        System.out.println("Execute Action 3!");
+    private void setModeSleep(int count) {
+        unregisterOtherButtons();
+        this.previousMode = this.mode;
+        this.mode = Mode.SLEEP;
+        this.sleepCounter = count;
     }
 
     /**
@@ -131,13 +153,13 @@ public class MineField extends Scene {
      * @param win boolean to indicate win or loss
      */
     private void end(boolean win) {
-        end = true;
-        endCount = getCounter();
-        grid.reveilAll();
+        this.end = true;
+        this.endCount = getCounter();
+        this.grid.reveilAll();
 
         if (win) {
             BufferedImage image = Loader.loadImage(ImageMapping.WIN);
-            removeEndscreen.setImage(image);
+            this.removeEndscreen.setImage(image);
         }
     }
 
@@ -169,31 +191,120 @@ public class MineField extends Scene {
     @Override
     public void update() {
         super.update();
-        if (removeEndscreenImage) {
-            unregisterButton(removeEndscreen);
-            registerOtherButtons();
-            removeEndscreenImage = false;
-        }
-        if (endCount!=0) {
-            if (getCounter() == endCount + 40 ) {
-                registerButton(removeEndscreen);
-                unregisterOtherButtons();
-                endCount = 0;
-            }
-        }
-        int reveiledFields = mineCount;
-        if (!end) {
-            for (Field f: getFields()) {
-                if (StaticValues.FieldState.REVEILED == f.getState()) {
-                    reveiledFields += 1;
-                    if (9 == f.getValue()) {
-                        end(false);
+        lastField = updateReveiledFields();
+        switch (mode) {
+            case Mode.NEUTRAL:
+                if (removeEndscreenImage) {
+                    removeEndScreen();
+                }
+                if (endCount!=0) {
+                    updateEndCount();
+                }
+                if (!end) {
+                    checkEndConditions(lastField);
+                }
+                break;
+            case Mode.SAFEZONE:
+                safeZoneFinder();
+                break;
+            case Mode.TRUESIGHT:
+                truesightFields = truesight();
+                break;
+            case Mode.SLEEP:
+                if (sleepCounter == 0) {
+                    registerOtherButtons();
+                    this.mode = this.previousMode;
+                    this.previousMode = Mode.SLEEP;
+                    if (this.lastField != null) {
+                        this.lastField.conceal();
+                        this.lastField = null;
                     }
+                    if (truesightFields != null) {
+                        for (Field f: truesightFields) {
+                            f.conceal();
+                        }
+                        truesightFields = null;
+                    }
+                    setModeNeutral();
+                }
+                else {
+                    sleepCounter -= 1;
+                }
+                break;
+        }
+    }
+
+    public Field updateReveiledFields() {
+        int previousCount = reveiledFields;
+        reveiledFields = 0;
+        Field reveiledMine = null;
+        for (Field f: getFields()) {
+            if (f.getState() == FieldState.REVEILED) {
+                reveiledFields +=1;
+                if (f.getValue()==9) {
+                    reveiledMine = f;
                 }
             }
-            if (reveiledFields == fieldCount) {
-                end(true);
+        }
+        if (reveiledFields>previousCount && shield > 0) {
+            shield -= 1;
+            shields.setText("" + (shield-1));
+        }
+        return reveiledMine;
+    }
+
+    public void safeZoneFinder() {
+        Random duck = new Random();
+        Point gridSize = grid.getSize();
+        boolean validField = false;
+        Field f = null;
+        while (!validField) {
+            int x = duck.nextInt(gridSize.x);
+            int y = duck.nextInt(gridSize.y);
+            f = grid.getField(x, y);
+            if (f.getValue() == 0) {
+                validField = true;
             }
+        }
+        f.reveilAction();
+        setModeNeutral();
+    }
+
+    public List<Field> truesight() {
+        List<Field> truesightFields = new ArrayList<>();
+        for (Field f: grid.getAllFields()) {
+            if (f.getState()==FieldState.UNKNOWN) {
+                f.show();
+                truesightFields.add(f);
+            }
+        }
+        setModeSleep(StaticValues.TRUESIGHTCOUNTER);
+        return truesightFields;
+    }
+
+    public void updateEndCount() {
+        if (getCounter() == endCount + 40 ) {
+            registerButton(removeEndscreen);
+            unregisterOtherButtons();
+            endCount = 0;
+        }
+    }
+
+    public void removeEndScreen() {
+        unregisterButton(removeEndscreen);
+        registerOtherButtons();
+        removeEndscreenImage = false;
+    }
+
+    public void checkEndConditions(Field lastField) {
+        if (lastField!=null && shield==0) {
+            end(false);
+        }
+        else if (lastField!=null && shield>0) {
+            setModeSleep(20);
+        }
+        else if (reveiledFields+mineCount==fieldCount) {
+            end(true);
         }
     }
 }

@@ -154,10 +154,10 @@ public class Grid {
                 newField.setValue(fieldValue);
 
                 if (fieldValue == 9) {
-                    newField.setSound(explosion);
+                    newField.setSound(explosion, reveil);
                 }
                 else {
-                    newField.setSound(reveil);
+                    newField.setSound(reveil, reveil);
                 }
 
                 newField.setMatrixLocation(j, i);
@@ -220,7 +220,7 @@ public class Grid {
      * @param y location y in the Field matrix
      * @return Field at location xy of the field matrix 
      */
-    private Field getField(int x, int y) {
+    public Field getField(int x, int y) {
         return fieldMatrix.get(y).get(x);
     }
 

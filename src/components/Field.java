@@ -6,6 +6,8 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import javax.sound.sampled.Clip;
+
 import src.core.StaticValues;
 import src.core.StaticValues.FieldState;
 
@@ -29,6 +31,7 @@ public class Field extends Component{
     private Color color;
     private Point matrixLocation;
     private List<Field> adjacentFields;
+    private Clip flag;
     
     /**
      * Takes width, height, x and y coordinates to create a Field Object.
@@ -70,7 +73,7 @@ public class Field extends Component{
         g.dispose();
     }
 
-    public StaticValues.FieldState getState() {
+    public FieldState getState() {
         return state;
     }
 
@@ -100,6 +103,11 @@ public class Field extends Component{
      */
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public void setSound(Clip sound, Clip flagSound) {
+        setSound(sound);
+        this.flag = flagSound;
     }
 
     /**
@@ -148,11 +156,21 @@ public class Field extends Component{
      */
     public void reveil() {
         this.state = FieldState.REVEILED;
+        show();
+    }
+
+    public void show() {
         this.setColor();
         this.setText("" + value);
         if (value == 9) {
             this.setText("O");
         }
+    }
+
+    public void conceal() {
+        this.state = FieldState.UNKNOWN;
+        this.color = Color.GRAY;
+        this.setText(" ");
     }
 
     /**
@@ -180,7 +198,11 @@ public class Field extends Component{
      */
     public void flagAction(Point mouseLocation) {
         if (collidePoint(mouseLocation)) {
-            this.playSound();
+            
+            this.flag.stop();
+            this.flag.setFramePosition(0);
+            this.flag.start();
+
             this.color = StaticValues.COLORS[0];
             if (this.state == FieldState.UNKNOWN) {
                 this.state = FieldState.FLAGGED;

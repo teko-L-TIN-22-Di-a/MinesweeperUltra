@@ -23,6 +23,8 @@ public class StaticValues {
     public static int UPDATE_PERIOD = 60;
     /** Lenght of the side of the field square */
     public static int FIELDSIZE = 30;
+    /** Amount of tickts for truesight activity */
+    public static int TRUESIGHTCOUNTER = 2;
     /**
      * Colors used for the Fields. The sequence is relevant and
      * the index corresponds to the Field value.
@@ -67,5 +69,12 @@ public class StaticValues {
         PREVIOUS,
         /** Tag for new Scenes */
         NEW
+    }
+
+    public static enum Mode {
+        NEUTRAL,
+        SAFEZONE,
+        TRUESIGHT,
+        SLEEP
     }
 }
