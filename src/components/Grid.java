@@ -201,6 +201,12 @@ public class Grid {
         return allFields;
     }
 
+    public void reveilAll() {
+        for (Field f: getAllFields()) {
+            f.reveil();
+        }
+    }
+
     public void print() {
         for (int[] row: grid) {
             String out = "";

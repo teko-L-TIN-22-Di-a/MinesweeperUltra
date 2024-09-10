@@ -70,6 +70,10 @@ public class Field extends Component{
         g.dispose();
     }
 
+    public StaticValues.FieldState getState() {
+        return state;
+    }
+
     /**
      * Takes an x and y coordinate to be stored in this Objects matrixLocation variable.
      * @param x x coordinate to be stored in this Objects matrixLocation variable
@@ -142,9 +146,13 @@ public class Field extends Component{
     /**
      * Changes the State of the Field to "Reveiled" and sets the corresponding Color.
      */
-    private void reveil() {
+    public void reveil() {
         this.state = FieldState.REVEILED;
         this.setColor();
+        this.setText("" + value);
+        if (value == 9) {
+            this.setText("O");
+        }
     }
 
     /**
@@ -155,16 +163,9 @@ public class Field extends Component{
     public void reveilAction() {
         if (this.state == FieldState.UNKNOWN) {
             reveil();
-            if (value == 9) {
-                this.setText("O");
-                System.out.println("BOOM!");
-            }
-            else {
-                this.setText("" + value);
-                if (value == 0) {
-                    for (Field f: adjacentFields) {
-                        f.reveilAction();
-                    }
+            if (value == 0) {
+                for (Field f: adjacentFields) {
+                    f.reveilAction();
                 }
             }
         }

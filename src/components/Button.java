@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-import src.assets.Loader;
-
 /**
  * Extends the Component class with a Textfield and a Runnable action
  * @see Textfield
@@ -17,7 +15,6 @@ public class Button extends Component{
     private Textfield label;
     private String text;
     private Runnable action;
-    private BufferedImage image;
 
     /**
      * Creates a Button with size, location, text and color.
@@ -43,13 +40,12 @@ public class Button extends Component{
      * @param y         y coordinate for the location
      * @param imageName     image of the Button
      */
-    public Button(int x, int y, String imageName) {
+    public Button(int x, int y, BufferedImage image) {
         super(1, 1, x, y);
-        image = Loader.loadImage(imageName);
+        setImage(image);
         int width = image.getWidth();
         int height = image.getHeight();
         setSize(width, height);
-        setImage(image);
     }
 
     /**

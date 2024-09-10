@@ -2,7 +2,9 @@ package src.scenes;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
+import src.assets.Loader;
 import src.components.Button;
 import src.components.Field;
 import src.components.Grid;
@@ -18,6 +20,9 @@ import src.core.StaticValues;
 public class MineField extends Scene {
     
     private Grid grid;
+    private int mineCount;
+    private int fieldCount;
+    private boolean win, lose;
 
     /**
      * Sets up the Level1 scene.
@@ -27,6 +32,8 @@ public class MineField extends Scene {
     public MineField(int width, int height, int mineCount) {
         super(false, "minefield");
         Point windowSize = new Point(StaticValues.CANVAS_WIDTH, StaticValues.CANVAS_HEIGHT);
+        this.mineCount = mineCount;
+        this.fieldCount = width*height;
 
         Button menu = new Button(100, 50, 25, 25, "MENU", Color.GRAY);
         menu.setAction(() -> {
@@ -73,5 +80,42 @@ public class MineField extends Scene {
 
     private void action3() {
         System.out.println("Execute Action 3!");
+    }
+
+    private void end(boolean win) {
+        grid.reveilAll();
+        String imageName = "";
+
+        if (win) {
+            imageName = "win.png";
+        }
+        else {
+            imageName = "lose.png";
+        }
+        BufferedImage image = Loader.loadImage(imageName);
+        int x = (StaticValues.CANVAS_WIDTH - image.getWidth())/2;
+        int y = (StaticValues.CANVAS_HEIGHT - image.getHeight())/2;
+        Button end = new Button(x, y, image);
+        end.setAction(() -> {
+            unregisterButton(this);
+        });
+        registerButton(end);
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        int reveiledFields = mineCount;
+        for (Field f: getFields()) {
+            if (StaticValues.FieldState.REVEILED == f.getState()) {
+                reveiledFields += 1;
+                if (9 == f.getValue()) {
+                    end(false);
+                }
+            }
+        }
+        if (reveiledFields == fieldCount) {
+            end(true);
+        }
     }
 }
