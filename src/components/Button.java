@@ -60,6 +60,7 @@ public class Button extends Component{
      * Runs the defined action
      */
     public void action() {
+        playSound();
         if (this.action != null) {
             this.action.run();
         }

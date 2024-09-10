@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+import javax.sound.sampled.Clip;
+
 import src.assets.Loader;
 import src.core.StaticValues.Corners;
 
@@ -16,6 +18,7 @@ public class Component {
     private BufferedImage image;
     /** Rectangle to track size and location */
     private Rectangle rect;
+    private Clip sound;
 
     /**
      * Creates a Component with size, location and Rectangle
@@ -26,6 +29,7 @@ public class Component {
      */
     public Component(int width, int height, int x, int y) {
         this.rect = new Rectangle(width, height, x, y);
+        this.sound = null;
     }
 
     /**
@@ -41,6 +45,7 @@ public class Component {
         int width = image.getWidth();
         int height = image.getHeight();
         this.rect = new Rectangle(width, height, x, y);
+        this.sound = null;
     }
 
     /**
@@ -50,6 +55,22 @@ public class Component {
      */
     public boolean collidePoint(Point point) {
         return rect.collidePoint(point);
+    }
+
+    /**
+     * Takes a filename, loads the corresponding sound file and sets it to the sound variable.
+     * @param filename filename of the sound file to be loaded
+     */
+    public void setSound(Clip sound) {
+        this.sound = sound;
+    }
+
+    public void playSound() {
+        if (sound != null) {
+            sound.stop();
+            sound.setFramePosition(0);
+            sound.start();
+        }
     }
 
     /**

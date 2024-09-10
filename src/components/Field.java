@@ -163,6 +163,7 @@ public class Field extends Component{
     public void reveilAction() {
         if (this.state == FieldState.UNKNOWN) {
             reveil();
+            playSound();
             if (value == 0) {
                 for (Field f: adjacentFields) {
                     f.reveilAction();
@@ -179,6 +180,7 @@ public class Field extends Component{
      */
     public void flagAction(Point mouseLocation) {
         if (collidePoint(mouseLocation)) {
+            this.playSound();
             this.color = StaticValues.COLORS[0];
             if (this.state == FieldState.UNKNOWN) {
                 this.state = FieldState.FLAGGED;

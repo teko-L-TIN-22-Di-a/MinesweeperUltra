@@ -6,7 +6,11 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sound.sampled.Clip;
+
+import src.assets.ImageMapping;
 import src.assets.Loader;
+import src.assets.SoundMapping;
 import src.components.Button;
 import src.components.Field;
 import src.components.Grid;
@@ -31,9 +35,13 @@ public class MineField extends Scene {
     private List<Button> otherButtons;
 
     /**
-     * Sets up the Level1 scene.
-     * @see Monster
-     * @see Bow
+     * Takes a width, height and mine count to create a Minefield Scene.  
+     * Width and height define the size of the Grid. Minecount defines,
+     * how many Mines will be in the Minefield.  
+     * The contstructor sets up all neccessary variables and Buttons.
+     * @param width
+     * @param height
+     * @param mineCount
      */
     public MineField(int width, int height, int mineCount) {
         super(false, "minefield");
@@ -43,6 +51,7 @@ public class MineField extends Scene {
         this.removeEndscreenImage = false;
         this.endCount = 0;
         this.otherButtons = new ArrayList<>();
+        setBGM(SoundMapping.MINEFIELD);
 
         Button menu = new Button(100, 50, 25, 25, "MENU", Color.GRAY);
         menu.setAction(() -> {
@@ -66,8 +75,7 @@ public class MineField extends Scene {
             action3();
         });
 
-        String imageName = "lose.png";
-        BufferedImage image = Loader.loadImage(imageName);
+        BufferedImage image = Loader.loadImage(ImageMapping.LOSE);
         int x = (StaticValues.CANVAS_WIDTH - image.getWidth())/2;
         int y = (StaticValues.CANVAS_HEIGHT - image.getHeight())/2;
         
@@ -81,6 +89,11 @@ public class MineField extends Scene {
         otherButtons.add(action1);
         otherButtons.add(action2);
         otherButtons.add(action3);
+        
+        Clip buttonSound = Loader.loadSound(SoundMapping.BUTTON);
+        for (Button b: otherButtons) {
+            b.setSound(buttonSound);
+        }
         registerOtherButtons();
         
         grid = new Grid(width, height, mineCount);
@@ -90,42 +103,69 @@ public class MineField extends Scene {
         }
     }
 
+    /**
+     * Action for the first special Ability.
+     */
     private void action1() {
         System.out.println("Execute Action 1!");
     }
 
+    /**
+     * Action for the second special Ability.
+     */
     private void action2() {
         System.out.println("Execute Action 2!");
     }
 
+    /**
+     * Action for the third special Ability.
+     */
     private void action3() {
         System.out.println("Execute Action 3!");
     }
 
+    /**
+     * Takes a boolean that indicates, if the game was won or lost.  
+     * Sets the end variable to true, to indicate, that the Game has ended.  
+     * Reveils all Fields and changes the image from lose to win, if the Game was won.
+     * @param win boolean to indicate win or loss
+     */
     private void end(boolean win) {
         end = true;
         endCount = getCounter();
         grid.reveilAll();
 
         if (win) {
-            String imageName = "win.png";
-            BufferedImage image = Loader.loadImage(imageName);
+            BufferedImage image = Loader.loadImage(ImageMapping.WIN);
             removeEndscreen.setImage(image);
         }
     }
 
+    /**
+     * Registers all Buttons added to the otherButtons List.
+     */
     private void registerOtherButtons() {
         for (Button b: otherButtons) {
             registerButton(b);
         }
     }
 
+    /**
+     * Unregisters all Buttons added to the otherButtons List.
+     */
     private void unregisterOtherButtons() {
         for (Button b: otherButtons) {
             unregisterButton(b);
         }
     }
 
+    /**
+     * Calls the basic update Method and adds funcionalities specific to the Minefield.  
+     * Registers the endscreen Button and unregisters all other Buttons, when the Game ended.  
+     * Unregisters the endscreen Button and registers all other Buttons, after the endscreen
+     * Button has been used.  
+     * Checks, if either a Mine was reveiled or if the game has been won.
+     */
     @Override
     public void update() {
         super.update();

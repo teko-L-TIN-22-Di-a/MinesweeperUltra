@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.sound.sampled.Clip;
+
+import src.assets.Loader;
+import src.assets.SoundMapping;
 import src.core.StaticValues;
 
 /**
@@ -136,14 +140,26 @@ public class Grid {
      * Creates Field Objects for every field in value matrix. Adds every new field to the Field matrix
      */
     private void createFields() {
+        Clip explosion = Loader.loadSound(SoundMapping.EXPLOSION);
+        Clip reveil = Loader.loadSound(SoundMapping.REVEIL);
         for (int i = 0; i<size.y; i++) {
             for (int j = 0; j<size.x; j++) {
                 int fieldSize = StaticValues.FIELDSIZE;
+
                 int centerDeltaX = (StaticValues.CANVAS_WIDTH - size.x*(fieldSize+2))/2;
                 int centerDeltaY = (StaticValues.CANVAS_HEIGHT - size.y*(fieldSize+2))/2;
+
                 Field newField = new Field(fieldSize, fieldSize, centerDeltaX+i*(fieldSize+2), centerDeltaY+j*(fieldSize+2));
                 int fieldValue = getValue(i, j);
                 newField.setValue(fieldValue);
+
+                if (fieldValue == 9) {
+                    newField.setSound(explosion);
+                }
+                else {
+                    newField.setSound(reveil);
+                }
+
                 newField.setMatrixLocation(j, i);
                 fieldMatrix.get(i).add(newField);
             }
