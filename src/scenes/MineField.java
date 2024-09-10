@@ -77,10 +77,15 @@ public class MineField extends Scene {
             Menu m = new Menu();
             setNewScene(m);
         });
-        Button exit = new Button(100, 50, windowSize.x-125, 25 , "EXIT", Color.GRAY);
+        Button restart = new Button(100, 50, windowSize.x-125, 25 , "RESTART", Color.GRAY);
+        restart.setAction(() -> {
+            MineField m = new MineField(width, height, mineCount);
+            setNewScene(m);
+        });
+        Button exit = new Button(100, 50, windowSize.x-125, windowSize.y-75 , "EXIT", Color.GRAY);
         exit.setAction(() -> {
             System.exit(0);
-        });        
+        });
         Button action1 = new Button(100, 50, 25, windowSize.y/2 - 75, "FIND SAFEZONE", Color.GRAY);
         action1.setAction(() -> {
             setMode(Mode.SAFEZONE);
@@ -105,6 +110,7 @@ public class MineField extends Scene {
         });
 
         otherButtons.add(menu);
+        otherButtons.add(restart);
         otherButtons.add(exit);
         otherButtons.add(action1);
         otherButtons.add(action2);

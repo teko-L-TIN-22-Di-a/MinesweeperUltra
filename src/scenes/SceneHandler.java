@@ -23,7 +23,7 @@ public class SceneHandler {
      * @return boolean: true, if the new scene is different
      */
     public boolean sceneCheck(Scene newScene) {
-        if (activeScene.getTAG() != newScene.getTAG()) {
+        if (activeScene != newScene) {
             return true;
         }
         else {
