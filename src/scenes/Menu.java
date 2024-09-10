@@ -19,12 +19,12 @@ public class Menu extends Scene {
         super(true, "menu");
         int width = StaticValues.CANVAS_WIDTH;
         int height = StaticValues.CANVAS_HEIGHT;
-        Button start = new Button(100, 50, width/2, height/2 - 100, "START", Color.GRAY);
+        Button start = new Button(100, 50, width/2-50, height/2 - 100, "START", Color.GRAY);
         start.setAction(() -> {
-            MineField mf = new MineField(10, 10, 15);
+            MineField mf = new MineField(30, 30, 200);
             setNewScene(mf);
         });
-        Button exit = new Button(100, 50, width/2, height/2 + 100, "EXIT", Color.GRAY);
+        Button exit = new Button(100, 50, width/2-50, height/2 + 100, "EXIT", Color.GRAY);
         exit.setAction(() -> {
             System.exit(0);
         });

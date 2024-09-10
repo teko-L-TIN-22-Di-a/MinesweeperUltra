@@ -3,6 +3,8 @@ package src.scenes;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import src.assets.Loader;
 import src.components.Button;
@@ -22,9 +24,11 @@ public class MineField extends Scene {
     private Grid grid;
     private int mineCount;
     private int fieldCount;
+    private int endCount;
     private boolean end;
-    private boolean removeEndImage;
-    private Button removeEnd;
+    private boolean removeEndscreenImage;
+    private Button removeEndscreen;
+    private List<Button> otherButtons;
 
     /**
      * Sets up the Level1 scene.
@@ -36,7 +40,9 @@ public class MineField extends Scene {
         Point windowSize = new Point(StaticValues.CANVAS_WIDTH, StaticValues.CANVAS_HEIGHT);
         this.mineCount = mineCount;
         this.fieldCount = width*height;
-        this.removeEndImage = false;
+        this.removeEndscreenImage = false;
+        this.endCount = 0;
+        this.otherButtons = new ArrayList<>();
 
         Button menu = new Button(100, 50, 25, 25, "MENU", Color.GRAY);
         menu.setAction(() -> {
@@ -65,16 +71,17 @@ public class MineField extends Scene {
         int x = (StaticValues.CANVAS_WIDTH - image.getWidth())/2;
         int y = (StaticValues.CANVAS_HEIGHT - image.getHeight())/2;
         
-        removeEnd = new Button(x, y, image);
-        removeEnd.setAction(() -> {
-            removeEndImage = true;
+        removeEndscreen = new Button(x, y, image);
+        removeEndscreen.setAction(() -> {
+            removeEndscreenImage = true;
         });
 
-        registerButton(menu);
-        registerButton(exit);
-        registerButton(action1);
-        registerButton(action2);
-        registerButton(action3);
+        otherButtons.add(menu);
+        otherButtons.add(exit);
+        otherButtons.add(action1);
+        otherButtons.add(action2);
+        otherButtons.add(action3);
+        registerOtherButtons();
         
         grid = new Grid(width, height, mineCount);
 
@@ -97,21 +104,42 @@ public class MineField extends Scene {
 
     private void end(boolean win) {
         end = true;
+        endCount = getCounter();
         grid.reveilAll();
 
         if (win) {
             String imageName = "win.png";
             BufferedImage image = Loader.loadImage(imageName);
-            removeEnd.setImage(image);
+            removeEndscreen.setImage(image);
         }
-        registerButton(removeEnd);
+    }
+
+    private void registerOtherButtons() {
+        for (Button b: otherButtons) {
+            registerButton(b);
+        }
+    }
+
+    private void unregisterOtherButtons() {
+        for (Button b: otherButtons) {
+            unregisterButton(b);
+        }
     }
 
     @Override
     public void update() {
         super.update();
-        if (removeEndImage) {
-            unregisterButton(removeEnd);
+        if (removeEndscreenImage) {
+            unregisterButton(removeEndscreen);
+            registerOtherButtons();
+            removeEndscreenImage = false;
+        }
+        if (endCount!=0) {
+            if (getCounter() == endCount + 40 ) {
+                registerButton(removeEndscreen);
+                unregisterOtherButtons();
+                endCount = 0;
+            }
         }
         int reveiledFields = mineCount;
         if (!end) {

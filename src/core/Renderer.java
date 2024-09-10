@@ -28,8 +28,8 @@ import src.scenes.Scene;
 public class Renderer extends JFrame{
     /** Scene to render */
     private Scene scene;
-    /** Canvas to draw the Scene on */
     private Point canvasSize;
+    /** Canvas to draw the Scene on */
     public Canvas canvas = new Canvas();
     /** Used to set debug mode */
     private boolean debug = false;
@@ -104,9 +104,11 @@ public class Renderer extends JFrame{
         public void paintComponent(Graphics g) {
             this.offScreen.setColor(Color.black);
             this.offScreen.fillRect(0, 0, width, height);
-            this.offScreen.setColor(Color.blue);
-            this.offScreen.drawLine(0, StaticValues.CANVAS_HEIGHT/2, StaticValues.CANVAS_WIDTH, StaticValues.CANVAS_HEIGHT/2);
-            this.offScreen.drawLine(StaticValues.CANVAS_WIDTH/2, 0, StaticValues.CANVAS_WIDTH/2, StaticValues.CANVAS_HEIGHT);
+            if (debug) {
+                this.offScreen.setColor(Color.blue);
+                this.offScreen.drawLine(0, StaticValues.CANVAS_HEIGHT/2, StaticValues.CANVAS_WIDTH, StaticValues.CANVAS_HEIGHT/2);
+                this.offScreen.drawLine(StaticValues.CANVAS_WIDTH/2, 0, StaticValues.CANVAS_WIDTH/2, StaticValues.CANVAS_HEIGHT);
+            }
             List<Component> components = scene.getComponents();
             for (Component component: components) {
                 Point componentLocation = component.getDrawPosition();

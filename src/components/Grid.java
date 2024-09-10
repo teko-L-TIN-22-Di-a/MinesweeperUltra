@@ -35,6 +35,7 @@ public class Grid {
         grid = new int[width][height];
         size = new Point(width, height);
         fieldMatrix = new ArrayList<>();
+
         int i;
         for (i=0; i<height; i++) {
             List<Field> line = new ArrayList<>();
@@ -83,7 +84,6 @@ public class Grid {
                 if (grid[y][x] != 9) {
                     grid[y][x] = 9;
                     valid = true;
-                    System.out.println("new mine at " + x + " " + y);
                 }
             }
         }
@@ -139,7 +139,9 @@ public class Grid {
         for (int i = 0; i<size.y; i++) {
             for (int j = 0; j<size.x; j++) {
                 int fieldSize = StaticValues.FIELDSIZE;
-                Field newField = new Field(fieldSize, fieldSize, i*fieldSize+300, j*fieldSize+25);
+                int centerDeltaX = (StaticValues.CANVAS_WIDTH - size.x*(fieldSize+2))/2;
+                int centerDeltaY = (StaticValues.CANVAS_HEIGHT - size.y*(fieldSize+2))/2;
+                Field newField = new Field(fieldSize, fieldSize, centerDeltaX+i*(fieldSize+2), centerDeltaY+j*(fieldSize+2));
                 int fieldValue = getValue(i, j);
                 newField.setValue(fieldValue);
                 newField.setMatrixLocation(j, i);
@@ -149,7 +151,8 @@ public class Grid {
     }
 
     /**
-     * 
+     * Iterates through all the Fields and adds a reference to all adjacent
+     * Fields to the current Field, if the value of the current Field is 0.
      */
     private void setAdjacentFields() {
         ///fieldMatrix.stream().map(height -> {height.})
@@ -164,6 +167,14 @@ public class Grid {
         }
     }
 
+    /**
+     * Takes x and y coordinates to get all adjacent Fields of Field xy
+     * regarding the borders of the Grid.  
+     * Returns all adjacent Fields as a List.
+     * @param x location x in the Field matrix
+     * @param y location y in the Field matrix
+     * @return List of all adjacent Fields.
+     */
     private List<Field> getAdjacentFields(int x, int y) {
         List<Field> fields = new ArrayList<>();
         int i;
@@ -187,10 +198,21 @@ public class Grid {
         return fields;
     }
 
+    /**
+     * Takes x and y coordinates to get the Field at location xy of the field matrix.
+     * @param x location x in the Field matrix
+     * @param y location y in the Field matrix
+     * @return Field at location xy of the field matrix 
+     */
     private Field getField(int x, int y) {
         return fieldMatrix.get(y).get(x);
     }
 
+    /**
+     * Iterates through the Field matrix and returns
+     * a List containing all Fields of the Grid.
+     * @return a List of all Fields in the Grid
+     */
     public List<Field> getAllFields() {
         List<Field> allFields = new ArrayList<>();
         for (List<Field> fl: fieldMatrix) {
@@ -201,12 +223,19 @@ public class Grid {
         return allFields;
     }
 
+    /**
+     * Gets all the Fields in the Grid and performs the reveil
+     * method for all of them.
+     */
     public void reveilAll() {
         for (Field f: getAllFields()) {
             f.reveil();
         }
     }
 
+    /**
+     * Prints out the Grids value matrix to the console.
+     */
     public void print() {
         for (int[] row: grid) {
             String out = "";
