@@ -22,7 +22,9 @@ public class MineField extends Scene {
     private Grid grid;
     private int mineCount;
     private int fieldCount;
-    private boolean win, lose;
+    private boolean end;
+    private boolean removeEndImage;
+    private Button removeEnd;
 
     /**
      * Sets up the Level1 scene.
@@ -34,6 +36,7 @@ public class MineField extends Scene {
         Point windowSize = new Point(StaticValues.CANVAS_WIDTH, StaticValues.CANVAS_HEIGHT);
         this.mineCount = mineCount;
         this.fieldCount = width*height;
+        this.removeEndImage = false;
 
         Button menu = new Button(100, 50, 25, 25, "MENU", Color.GRAY);
         menu.setAction(() -> {
@@ -55,6 +58,16 @@ public class MineField extends Scene {
         Button action3 = new Button(100, 50, 25, windowSize.y/2 + 75 , "ACTION3", Color.GRAY);
         action3.setAction(() -> {
             action3();
+        });
+
+        String imageName = "lose.png";
+        BufferedImage image = Loader.loadImage(imageName);
+        int x = (StaticValues.CANVAS_WIDTH - image.getWidth())/2;
+        int y = (StaticValues.CANVAS_HEIGHT - image.getHeight())/2;
+        
+        removeEnd = new Button(x, y, image);
+        removeEnd.setAction(() -> {
+            removeEndImage = true;
         });
 
         registerButton(menu);
@@ -83,39 +96,36 @@ public class MineField extends Scene {
     }
 
     private void end(boolean win) {
+        end = true;
         grid.reveilAll();
-        String imageName = "";
 
         if (win) {
-            imageName = "win.png";
+            String imageName = "win.png";
+            BufferedImage image = Loader.loadImage(imageName);
+            removeEnd.setImage(image);
         }
-        else {
-            imageName = "lose.png";
-        }
-        BufferedImage image = Loader.loadImage(imageName);
-        int x = (StaticValues.CANVAS_WIDTH - image.getWidth())/2;
-        int y = (StaticValues.CANVAS_HEIGHT - image.getHeight())/2;
-        Button end = new Button(x, y, image);
-        end.setAction(() -> {
-            unregisterButton(this);
-        });
-        registerButton(end);
+        registerButton(removeEnd);
     }
 
     @Override
     public void update() {
         super.update();
+        if (removeEndImage) {
+            unregisterButton(removeEnd);
+        }
         int reveiledFields = mineCount;
-        for (Field f: getFields()) {
-            if (StaticValues.FieldState.REVEILED == f.getState()) {
-                reveiledFields += 1;
-                if (9 == f.getValue()) {
-                    end(false);
+        if (!end) {
+            for (Field f: getFields()) {
+                if (StaticValues.FieldState.REVEILED == f.getState()) {
+                    reveiledFields += 1;
+                    if (9 == f.getValue()) {
+                        end(false);
+                    }
                 }
             }
-        }
-        if (reveiledFields == fieldCount) {
-            end(true);
+            if (reveiledFields == fieldCount) {
+                end(true);
+            }
         }
     }
 }
