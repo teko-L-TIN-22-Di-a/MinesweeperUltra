@@ -31,7 +31,7 @@ public class Field extends Component{
     private Color color;
     private Point matrixLocation;
     private List<Field> adjacentFields;
-    private Clip flag;
+    private Clip flag, unflag;
     
     /**
      * Takes width, height, x and y coordinates to create a Field Object.
@@ -105,9 +105,9 @@ public class Field extends Component{
         this.value = value;
     }
 
-    public void setSound(Clip sound, Clip flagSound) {
-        setSound(sound);
-        this.flag = flagSound;
+    public void setFlagSounds(Clip flag, Clip unflag) {
+        this.flag = flag;
+        this.unflag = unflag;
     }
 
     /**
@@ -198,23 +198,19 @@ public class Field extends Component{
      */
     public void flagAction(Point mouseLocation) {
         if (collidePoint(mouseLocation)) {
-            
-            this.flag.stop();
-            this.flag.setFramePosition(0);
-            this.flag.start();
 
             this.color = StaticValues.COLORS[0];
             if (this.state == FieldState.UNKNOWN) {
                 this.state = FieldState.FLAGGED;
                 this.color = Color.DARK_GRAY;
                 this.setText("F");
-                System.err.println("flagged field");
+                playSound(this.flag);
             }
             else if (this.state == FieldState.FLAGGED) {
                 this.state = FieldState.UNKNOWN;
                 this.color = Color.GRAY;
                 this.setText(" ");
-                System.err.println("unflagged field");
+                playSound(this.unflag);
             }
         }
     }

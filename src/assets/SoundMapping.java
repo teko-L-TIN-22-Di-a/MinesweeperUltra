@@ -21,4 +21,15 @@ public class SoundMapping {
     public static String BUTTON = "button.wav";
     /** Sound filename for reveil action */
     public static String REVEIL = "reveil.wav";
+    /** Sound filename for reveil action */
+    public static String FLAG = "flag.wav";
+    /** Sound filename for reveil action */
+    public static String UNFLAG = "unflag.wav";
+    /** Sound filename for reveil action */
+    public static String SAFEZONE = "safezone.wav";
+    /** Sound filename for reveil action */
+    public static String SHIELD = "shield.wav";
+    /** Sound filename for reveil action */
+    public static String TRUESIGHT = "truesight.wav";
+    /**  */
 }

@@ -149,6 +149,9 @@ public class Grid {
     private void createFields() {
         Clip explosion = Loader.loadSound(SoundMapping.EXPLOSION);
         Clip reveil = Loader.loadSound(SoundMapping.REVEIL);
+        Clip flag = Loader.loadSound(SoundMapping.FLAG);
+        Clip unflag = Loader.loadSound(SoundMapping.UNFLAG);
+
         for (int i = 0; i<size.y; i++) {
             for (int j = 0; j<size.x; j++) {
                 int fieldSize = StaticValues.FIELDSIZE;
@@ -161,11 +164,12 @@ public class Grid {
                 newField.setValue(fieldValue);
 
                 if (fieldValue == 9) {
-                    newField.setSound(explosion, reveil);
+                    newField.setSound(explosion);
                 }
                 else {
-                    newField.setSound(reveil, reveil);
+                    newField.setSound(reveil);
                 }
+                newField.setFlagSounds(flag, unflag);
 
                 newField.setMatrixLocation(j, i);
                 fieldMatrix.get(i).add(newField);

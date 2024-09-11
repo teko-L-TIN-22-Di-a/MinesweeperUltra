@@ -73,6 +73,12 @@ public class Component {
         }
     }
 
+    public void playSound(Clip clip) {
+        clip.stop();
+        clip.setFramePosition(0);
+        clip.start();
+    }
+
     /**
      * Base for update methods of extending subclasses.
      */
