@@ -12,8 +12,9 @@ import src.components.Button;
 import src.components.Textfield;
 
 /**
- * Creates the menu screen.
- * Extends the Scene class.
+ * Extends the Scene class to create a Menu.  
+ * The Menu contains Buttons to set Size and Difficulty
+ * and to start or exit the Game.
  * @see Button
  * @see Scene
  */
@@ -117,6 +118,12 @@ public class Menu extends Scene {
         registerButton(hard);
     }
 
+    /**
+     * Uses the gridSize to determine the size of the grid
+     * and the difficulty variable to load the corresponding
+     * amount of mines from the difficulty settings in the StaticValues.
+     * At the end the Textfields are updated with the new values.
+     */
     private void setMines() {
         int size = 0;
         if (gridSize==StaticValues.MEDIUM) {
@@ -129,6 +136,10 @@ public class Menu extends Scene {
         updateText();
     }
 
+    /**
+     * Uses the sizeText and difficultyText variables to update the
+     * corresponding Textfields.
+     */
     private void updateText() {
         sizeTextfield.setText(("SIZE: " + sizeText));
         difficultyTextfield.setText("DIFFICULTIY: " + difficultyText);

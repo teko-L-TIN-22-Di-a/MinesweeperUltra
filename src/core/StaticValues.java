@@ -33,7 +33,7 @@ public class StaticValues {
     /** Size if a large Minefield */
     public static Point LARGE = new Point(30, 30);
     /** Amount of Mines for the Minefield sizes for easy, medium and hard difficulties */
-    public static int[][] DIFFICULTY = {{10,20,30},{40,80,120},{90,180,270}};
+    public static int[][] DIFFICULTY = {{10,20,25},{40,80,100},{90,180,225}};
     /**
      * Colors used for the Fields. The sequence is relevant and
      * the index corresponds to the Field value.
