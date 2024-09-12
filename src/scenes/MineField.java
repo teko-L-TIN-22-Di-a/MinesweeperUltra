@@ -86,17 +86,20 @@ public class MineField extends Scene {
         exit.setAction(() -> {
             System.exit(0);
         });
-        Button action1 = new Button(100, 50, 25, windowSize.y/2 - 75, "FIND SAFEZONE", Color.GRAY);
-        action1.setAction(() -> {
+        Button safezoneButton = new Button(100, 50, 25, windowSize.y/2 - 75, "FIND SAFEZONE", Color.GRAY);
+        safezoneButton.setLimit(1);
+        safezoneButton.setAction(() -> {
             setMode(Mode.SAFEZONE);
         });
-        Button action2 = new Button(100, 50, 25, windowSize.y/2 , "SHIELD", Color.GRAY);
-        action2.setAction(() -> {
+        Button shieldButton = new Button(100, 50, 25, windowSize.y/2 , "SHIELD", Color.GRAY);
+        shieldButton.setLimit(2);
+        shieldButton.setAction(() -> {
             this.shield = 4;
             this.shields.setText("" + (this.shield-1));
         });
-        Button action3 = new Button(100, 50, 25, windowSize.y/2 + 75 , "TRUESIGHT", Color.GRAY);
-        action3.setAction(() -> {
+        Button truesighButton = new Button(100, 50, 25, windowSize.y/2 + 75 , "TRUESIGHT", Color.GRAY);
+        truesighButton.setLimit(3);
+        truesighButton.setAction(() -> {
             setMode(Mode.TRUESIGHT);
         });
 
@@ -112,9 +115,9 @@ public class MineField extends Scene {
         otherButtons.add(menu);
         otherButtons.add(restart);
         otherButtons.add(exit);
-        otherButtons.add(action1);
-        otherButtons.add(action2);
-        otherButtons.add(action3);
+        otherButtons.add(safezoneButton);
+        otherButtons.add(shieldButton);
+        otherButtons.add(truesighButton);
         
         Clip buttonSound = Loader.loadSound(SoundMapping.BUTTON);
         for (Button b: otherButtons) {

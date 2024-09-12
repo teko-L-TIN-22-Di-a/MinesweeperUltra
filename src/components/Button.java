@@ -15,6 +15,8 @@ public class Button extends Component{
     private Textfield label;
     private String text;
     private Runnable action;
+    private int limitCount;
+    private boolean limit;
 
     /**
      * Creates a Button with size, location, text and color.
@@ -49,6 +51,25 @@ public class Button extends Component{
     }
 
     /**
+     * Takes a number to set as limitCount variable and sets the limit to true.
+     * The limit variable can be used to limit the use of a Button. 
+     * @param limit number to set as limit variable
+     */
+    public void setLimit(int limit) {
+        this.limit = true;
+        this.limitCount = limit;
+    }
+
+    /**
+     * Returns the limit variable.
+     * The limit variable can be used to limit the use of a Button.
+     * @return limit variable
+     */
+    public int getLimit() {
+        return this.limitCount;
+    }
+
+    /**
      * Takes a Runnable and stores it as action variable
      * @param action    new action to perform on button click
      */
@@ -57,12 +78,20 @@ public class Button extends Component{
     }
 
     /**
-     * Runs the defined action
+     * Checks the limit of Button uses (if there is one) and
+     * runs the defined action, if the limit is not breached.
      */
     public void action() {
-        playSound();
         if (this.action != null) {
-            this.action.run();
+            if (!this.limit) {
+                playSound();
+                this.action.run();
+            }
+            else if (this.limit && this.limitCount > 0) {
+                this.limitCount -= 1;
+                playSound();
+                this.action.run();
+            }
         }
     }
 
@@ -114,5 +143,6 @@ public class Button extends Component{
     private void setUpStandardButton(int width, int height) {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         setImage(image);
+        limitCount = 99;
     }
 }
