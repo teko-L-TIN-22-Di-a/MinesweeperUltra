@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 /**
  * Extends the Compnent class by adding text, that can be drawn on a surface.
+ * Can be used as Textfield in the Scene or to add Labels to other Components.
  */
 public class Textfield extends Component{
 
@@ -15,9 +16,9 @@ public class Textfield extends Component{
 
     /**
      * Takes x and y coordinate and a String to create a Component with text.
-     * @param x             location x
-     * @param y             location y
-     * @param buttonText    displayed text
+     * @param x location x
+     * @param y location y
+     * @param text displayed text
      */
     public Textfield(int x, int y, String text) {
         super(1, 1, x, y);
@@ -27,18 +28,26 @@ public class Textfield extends Component{
         setSize(image.getWidth(), image.getHeight());
     }
 
+    /**
+     * Takes a Color and sets it as the Textfields writing Color.
+     * @param color writing Color
+     */
     public void setColor(Color color) {
         this.color = color;
     }
 
+    /**
+     * Takes a String to set as the text of the Textfield.
+     * @param text displayed text
+     */
     public void setText(String text) {
         this.text = text;
         setImage(createImage());
     }
 
     /**
-     * Creates an image with the display text
-     * @return  image with display text
+     * Creates an image with the display text.
+     * @return image with display text
      */
     private BufferedImage createImage() {
         // Split the text into lines

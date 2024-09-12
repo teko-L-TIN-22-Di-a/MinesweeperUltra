@@ -73,6 +73,10 @@ public class Field extends Component{
         g.dispose();
     }
 
+    /**
+     * Returns the FieldState of the Field.
+     * @return FieldState of the Field
+     */
     public FieldState getState() {
         return state;
     }
@@ -105,6 +109,11 @@ public class Field extends Component{
         this.value = value;
     }
 
+    /**
+     * Takes two sound Objects to set for the flag and unflag actions.
+     * @param flag sound for the flag action
+     * @param unflag sound for the unflag action
+     */
     public void setFlagSounds(Clip flag, Clip unflag) {
         this.flag = flag;
         this.unflag = unflag;
@@ -130,10 +139,10 @@ public class Field extends Component{
      * Takes a List of Fields to store in the adjacentFields List.  
      * These Fields can be used for actions that concern the other Fields
      * around this Field Object.
-     * @param af
+     * @param adjacentFields List of all adjacent Fields
      */
-    public void setAdjacentFields(List<Field> af) {
-        adjacentFields = af;
+    public void setAdjacentFields(List<Field> adjacentFields) {
+        this.adjacentFields = adjacentFields;
     }
 
     /**
@@ -145,6 +154,11 @@ public class Field extends Component{
         return adjacentFields;
     }
 
+    /**
+     * Takes a mouse location and checks, if it collides with the Field.
+     * If it collides, the reveilAction of the Field wil be triggered.
+     * @param mouseLocation current location of the mouse
+     */
     public void action(Point mouseLocation) {
         if (collidePoint(mouseLocation)) {
             reveilAction();
@@ -159,6 +173,9 @@ public class Field extends Component{
         show();
     }
 
+    /**
+     * Reveils the value and Color of the Field without changing it's FieldState.
+     */
     public void show() {
         this.setColor();
         this.setText("" + value);
@@ -167,6 +184,9 @@ public class Field extends Component{
         }
     }
 
+    /**
+     * Sets the FieldState to UNKNOWN and hides it's value and Color.
+     */
     public void conceal() {
         this.state = FieldState.UNKNOWN;
         this.color = Color.GRAY;
@@ -194,7 +214,7 @@ public class Field extends Component{
      * Action to be triggered, when a Field is flagged.  
      * The Fieldstate of a Unkwnown Field will be changed to Flagged and
      * vice versa.
-     * @param mouseLocation
+     * @param mouseLocation current location of the mouse
      */
     public void flagAction(Point mouseLocation) {
         if (collidePoint(mouseLocation)) {

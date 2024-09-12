@@ -17,13 +17,13 @@ import src.components.Field;
  * @see MouseTracker
  */
 public class Controller extends JPanel{
-    
-    /** handles mouse input */
+    /** Tracks Mouseevents like clicks. */
     private final MouseHandler handler;
-    /** tracks mouse position */
+    /** Tracks Mouse movement. */
     private final MouseTracker tracker;
-    /** list of Buttons to check */
+    /** List of Buttons than can be triggered with the Mouse */
     private List<Button> buttonList;
+    /** List of Fields than can be triggered with the Mouse */
     private List<Field> fieldList;
 
     /**
@@ -46,12 +46,16 @@ public class Controller extends JPanel{
 
     /**
      * Takes a list of Buttons and stores it in the buttonList.
-     * @param buttonList    list to store
+     * @param buttonList list to store
      */
     public void setButtonList(List<Button> buttonList) {
         this.buttonList = buttonList;
     }
 
+    /**
+     * Takes a list of Fields and stores it in the FieldList.
+     * @param fieldList list to store
+     */
     public void setFieldList(List<Field> fieldList) {
         this.fieldList = fieldList;
     }

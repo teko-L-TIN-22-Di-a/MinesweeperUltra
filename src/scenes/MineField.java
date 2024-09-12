@@ -22,9 +22,8 @@ import src.core.StaticValues.Mode;
 
 
 /**
- * Creates the level1 screen.
- * Extends the Scene class.
- * @see Bow
+ * Extends the Scene Class to create a minefield.  
+ * Main Scene for the Game, where the game will be played.
  * @see Scene
  */
 public class MineField extends Scene {
@@ -51,9 +50,9 @@ public class MineField extends Scene {
      * Width and height define the size of the Grid. Minecount defines,
      * how many Mines will be in the Minefield.  
      * The contstructor sets up all neccessary variables and Buttons.
-     * @param width
-     * @param height
-     * @param mineCount
+     * @param width amount of Fields in the width of the Minefield
+     * @param height amount of Fields in th height of the Minefield
+     * @param mineCount amount of Mines in the Minefield
      */
     public MineField(int width, int height, int mineCount) {
         super(false, "minefield");
@@ -140,21 +139,28 @@ public class MineField extends Scene {
     }
 
     /**
-     * Action for the first special Ability.
+     * Sets the Scene Mode to a specific Mode. Also keeps a Reference
+     * of the previous Mode.
+     * @param mode next mode for the Scene
      */
     private void setMode(Mode mode) {
-        if (this.mode != Mode.NEUTRAL) {
-            this.mode = Mode.NEUTRAL;
-        }
-        else {
-            this.mode = mode;
-        }
+        this.previousMode = this.mode;
+        this.mode = mode;
     }
 
+    /**
+     * Sets the Scene Mode to neutral. The scene will be processed in the
+     * Standardmode after this.
+     */
     private void setModeNeutral() {
         this.mode = Mode.NEUTRAL;
     }
 
+    /**
+     * Updates information displayed in the informationField2.  
+     * - Amount of shields remaining  
+     * - Amount of Abilities available
+     */
     private void updateInformationText() {
         String info = (this.shield) + "\n\n\n\n";
         info += safezoneButton.getLimit() + "\n";
@@ -163,6 +169,11 @@ public class MineField extends Scene {
         this.informationField2.setText(info);
     }
 
+    /**
+     * Takes a count for how many ticks the sceene should be inactive.
+     * All Buttons and informationfields will be removed for that duration.
+     * @param count ticks to sleep
+     */
     private void setModeSleep(int count) {
         unregisterOtherComponents();
         this.previousMode = this.mode;
@@ -188,7 +199,7 @@ public class MineField extends Scene {
     }
 
     /**
-     * Registers all Buttons added to the otherButtons List.
+     * Registers all Buttons added to the otherButtons List and all information textfields.
      */
     private void registerOtherComponents() {
         for (Button b: otherButtons) {
@@ -199,7 +210,7 @@ public class MineField extends Scene {
     }
 
     /**
-     * Unregisters all Buttons added to the otherButtons List.
+     * Unregisters all Buttons added to the otherButtons List and all information textfields.
      */
     private void unregisterOtherComponents() {
         for (Button b: otherButtons) {
@@ -260,6 +271,13 @@ public class MineField extends Scene {
         }
     }
 
+    /**
+     * Iterates through all the Fields and counts all reveiled Fields.  
+     * If there is a Mine Field (Value 9), a reference to that Field will be returned.
+     * This Reference will be used to either end the game or conceal the Field, if a
+     * Shield was active.
+     * @return Mine Field or null
+     */
     private Field updateReveiledFields() {
         int previousCount = reveiledFields;
         reveiledFields = 0;
@@ -281,6 +299,11 @@ public class MineField extends Scene {
         return reveiledMine;
     }
 
+    /**
+     * Gets random Fields until a Field with Value 0 is found.  
+     * The reveilAction Method will be called for the first
+     * found Field with value 0.
+     */
     private void safeZoneFinder() {
         Random duck = new Random();
         Point gridSize = grid.getSize();
@@ -295,9 +318,15 @@ public class MineField extends Scene {
             }
         }
         f.reveilAction();
-        setModeNeutral();
     }
 
+    /**
+     * Creates a List of all Fields currently having the
+     * FieldState UNKNOWN and returns that List.
+     * This List will be used to reveil those Fields for a short amount if time
+     * and also to conceal the fields again.
+     * @return List of fields for truesight
+     */
     private List<Field> truesight() {
         List<Field> truesightFields = new ArrayList<>();
         for (Field f: grid.getAllFields()) {
@@ -310,6 +339,13 @@ public class MineField extends Scene {
         return truesightFields;
     }
 
+    /**
+     * Uses the endCount variable to create a time buffer between
+     * the end of the game and the end screen. When this buffer ends,
+     * the end screen will be shown as a Button with the action to 
+     * reinstate the state before the screen. All other components will
+     * be hidden during the showing of the end screen.
+     */
     private void updateEndCount() {
         if (getCounter() == endCount + 40 ) {
             registerButton(removeEndscreen);
@@ -318,12 +354,20 @@ public class MineField extends Scene {
         }
     }
 
+    /**
+     * Removes the end screem and unhides all other components.
+     */
     private void removeEndScreen() {
         unregisterButton(removeEndscreen);
         registerOtherComponents();
         removeEndscreenImage = false;
     }
 
+    /**
+     * Takes the lastField varibale and uses it to determine, if
+     * the game has ended and if so, if it was won or lost.
+     * @param lastField Mine Field or null
+     */
     private void checkEndConditions(Field lastField) {
         if (lastField!=null && shield==0) {
             end(false);

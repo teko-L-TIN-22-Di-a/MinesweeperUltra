@@ -12,14 +12,15 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-/** Loads assets from the asset folder. */
+/** Loads assets from the resources folder. */
 public class Loader {
 
     private static String imageDir = ImageMapping.DIR;
     private static String soundDir = SoundMapping.DIR;
     
     /** 
-     * Initializes the Loader without any specific configuration.
+     * Loader does not need to be initialized, therefore
+     * the constructor is set to private.
      */
     private Loader() {
         // Initialization code can go here if needed

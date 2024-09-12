@@ -22,12 +22,12 @@ import src.scenes.Scene;
  * @see Scene
  * @see Canvas
  * @see Component
- * @see Entity
  * @see Button
  */
 public class Renderer extends JFrame{
     /** Scene to render */
     private Scene scene;
+    /** Size of the canvas/Screen */
     private Point canvasSize;
     /** Canvas to draw the Scene on */
     public Canvas canvas = new Canvas();
@@ -35,20 +35,9 @@ public class Renderer extends JFrame{
     private boolean debug = false;
 
     /**
-     * Creates a Renderer Object.
-     */
-    public Renderer() {
-        this.canvasSize = new Point(StaticValues.CANVAS_WIDTH, StaticValues.CANVAS_HEIGHT);
-        this.canvas.setPreferredSize(new Dimension(this.canvasSize.x, this.canvasSize.y));
-        this.setContentPane(this.canvas);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.pack();
-        this.setTitle(StaticValues.GAMENAME);
-        this.setVisible(true);
-    }
-
-    /**
-     * Creates a Renderer Object.
+     * Creates a Renderer Object. The debug option can be used to display Hit-
+     * and image Boxes, for easy controlling if the calculated positions match
+     * the positions on the screen.
      * @param debug if true, Hitboxes and ImageBoxes will be drawn
      */
     public Renderer(boolean debug) {

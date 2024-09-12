@@ -31,5 +31,4 @@ public class SoundMapping {
     public static String SHIELD = "shield.wav";
     /** Sound filename for reveil action */
     public static String TRUESIGHT = "truesight.wav";
-    /**  */
 }

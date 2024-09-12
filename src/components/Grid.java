@@ -26,7 +26,6 @@ public class Grid {
     private Random randy = new Random();
     private Point size;
     private List<List<Field>> fieldMatrix;
-    private int mineCount;
 
     /**
      * Takes width, height and a mine count to create a Grid Object.
@@ -37,13 +36,8 @@ public class Grid {
      * @param mineCount amount of mines in the Grid
      */
     public Grid(int width, int height, int mineCount) {
-        this.mineCount = mineCount;
         size = new Point(width, height);
         grid = new int[size.x][size.y];
-        reset();
-    }
-
-    public void reset() {
         grid = new int[size.x][size.y];
         fieldMatrix = new ArrayList<>();
 

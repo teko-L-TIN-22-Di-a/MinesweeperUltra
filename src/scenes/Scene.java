@@ -13,7 +13,6 @@ import src.components.Field;
 
 /**
  * Baseclass for any Scene.
- * @see Entity
  * @see Component
  * @see Button
  */
@@ -27,12 +26,12 @@ public class Scene {
     private Point mousepoint;
     private int counter;
     private Clip bgm;
-    public Runnable action1;
 
     /**
      * Initialises the lists Entities, Components and Buttons.
      * Properties from these lists will be drawn in the Renderer.
-     * @param isMenu determines, if the Scene is considered a Menu.
+     * @param isMenu determines, if the Scene is considered a Menu
+     * @param TAG scene identifier
      */
     public Scene(boolean isMenu, String TAG) {
         System.out.println("> start scene " + TAG);
@@ -236,10 +235,18 @@ public class Scene {
         return this.buttons;
     }
 
+    /**
+     * Takes a Field to add it to the Fields List.
+     * @param field Field to add to the Fields List
+     */
     public void addField(Field field) {
         this.fields.add(field);
     }
 
+    /**
+     * Returns the list of Fields associated with the Scene.
+     * @return list of Fields
+     */
     public List<Field> getFields() {
         return this.fields;
     }

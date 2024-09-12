@@ -35,12 +35,12 @@ public class Button extends Component{
     }
 
     /**
-     * Creates a Button with location and image.
-     * Loads the image from app/src/resources/assets.
+     * Creates a Button with location and image.  
+     * Takes a previously loaded Image.  
      * Size is taken from the image.
-     * @param x         x coordinate for the location
-     * @param y         y coordinate for the location
-     * @param imageName     image of the Button
+     * @param x x coordinate for the location
+     * @param y y coordinate for the location
+     * @param image image of the Button
      */
     public Button(int x, int y, BufferedImage image) {
         super(1, 1, x, y);

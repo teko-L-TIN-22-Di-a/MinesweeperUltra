@@ -58,13 +58,16 @@ public class Component {
     }
 
     /**
-     * Takes a filename, loads the corresponding sound file and sets it to the sound variable.
-     * @param filename filename of the sound file to be loaded
+     * Takes a sound Object, and sets it to the sound variable.
+     * @param sound sound Object
      */
     public void setSound(Clip sound) {
         this.sound = sound;
     }
 
+    /**
+     * Plays the audiofile stored in the sound variable from beginning.
+     */
     public void playSound() {
         if (sound != null) {
             sound.stop();
@@ -73,6 +76,10 @@ public class Component {
         }
     }
 
+    /**
+     * Takes a sound Object and plays it from the beginning.
+     * @param clip sound Object to play
+     */
     public void playSound(Clip clip) {
         clip.stop();
         clip.setFramePosition(0);

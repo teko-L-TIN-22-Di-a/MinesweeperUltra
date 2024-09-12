@@ -43,8 +43,11 @@ public class StaticValues {
     };
     /** Possible states a Field can have */
     public static enum FieldState {
+        /** Determines the State of a Field as UNKNOWN */
         UNKNOWN,
+        /** Determines the State of a Field as FLAGGED */
         FLAGGED,
+        /** Determines the State of a Field as REVEILED */
         REVEILED
     }
 

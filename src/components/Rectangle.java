@@ -9,7 +9,9 @@ import java.util.List;
 import src.core.StaticValues.Corners;
 
 /**
- * Provides functionalities to create and calculate with rectangles.
+ * Provides functionalities to create and calculate with rectangles.  
+ * The Rectangle is used a Location reference for most Components.
+ * @see Component
  */
 public class Rectangle {
     private Point size, location, topLeft, topRight, bottomLeft, bottomRight;

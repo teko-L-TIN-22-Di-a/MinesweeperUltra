@@ -26,7 +26,7 @@ public class Gameloop {
      * Sets up a Gameloop Object, initializes Renderer, Controller and Scene.
      */
     public Gameloop() {
-        this.renderer = new Renderer();
+        this.renderer = new Renderer(false);
         this.controller = new Controller();
         this.menu = new Menu();
         this.sceneHandler = new SceneHandler(menu);
@@ -53,6 +53,14 @@ public class Gameloop {
         new Timer(60, updateTask).start();
     }
 
+    /**
+     * Takes the active Scene and checks, if the Scene needs to be changed or not.  
+     * If the Scene is changed, the Components of the new Scene will be set for the
+     * Controller, the new Scene will be set as active Scene and the new Scene will
+     * be set for the Renderer.  
+     * At the end, the Mouse location will be updated for the current active Scene
+     * @param activeScene
+     */
     private void updateScene(Scene activeScene) {
         Scene newScene = activeScene.getNewScene();
         if (this.sceneHandler.sceneCheck(newScene)) {
