@@ -57,6 +57,16 @@ public class Scene {
     }
 
     /**
+     * Changes the Backgroundmusic and starts the new one from beginning
+     */
+    public void changeBGM(String filename) {
+        this.bgm.stop();
+        this.bgm = Loader.loadSound(filename);
+        this.bgm.setFramePosition(0);
+        this.bgm.loop(-1);
+    }
+
+    /**
      * Collects all operations to be done, when the Scene is started.
      */
     public void start() {

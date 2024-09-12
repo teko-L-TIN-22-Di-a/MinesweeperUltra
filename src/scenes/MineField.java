@@ -84,25 +84,30 @@ public class MineField extends Scene {
             Menu m = new Menu();
             setNewScene(m);
         });
+
         Button restart = new Button(100, 50, windowSize.x-125, 25 , "RESTART", Color.GRAY);
         restart.setAction(() -> {
             MineField m = new MineField(width, height, mineCount);
             setNewScene(m);
         });
+
         Button exit = new Button(100, 50, windowSize.x-125, windowSize.y-75 , "EXIT", Color.GRAY);
         exit.setAction(() -> {
             System.exit(0);
         });
+
         safezoneButton = new Button(100, 50, 25, windowSize.y/2 - 75, "FIND SAFEZONE", Color.GRAY);
         safezoneButton.setLimit(1);
         safezoneButton.setAction(() -> {
             safeZoneFinder();
         });
+
         shieldButton = new Button(100, 50, 25, windowSize.y/2 , "SHIELD", Color.GRAY);
         shieldButton.setLimit(2);
         shieldButton.setAction(() -> {
             this.shield = 3;
         });
+
         truesighButton = new Button(100, 50, 25, windowSize.y/2 + 75 , "TRUESIGHT", Color.GRAY);
         truesighButton.setLimit(3);
         truesighButton.setAction(() -> {
@@ -129,6 +134,9 @@ public class MineField extends Scene {
         for (Button b: otherButtons) {
             b.setSound(buttonSound);
         }
+        safezoneButton.setSound(Loader.loadSound(SoundMapping.SAFEZONE));
+        shieldButton.setSound(Loader.loadSound(SoundMapping.SHIELD));
+        truesighButton.setSound(Loader.loadSound(SoundMapping.TRUESIGHT));
         registerOtherComponents();
         
         grid = new Grid(width, height, mineCount);
@@ -361,6 +369,7 @@ public class MineField extends Scene {
         unregisterButton(removeEndscreen);
         registerOtherComponents();
         removeEndscreenImage = false;
+        changeBGM(SoundMapping.MINEFIELD);
     }
 
     /**
@@ -370,9 +379,11 @@ public class MineField extends Scene {
      */
     private void checkEndConditions(Field lastField) {
         if (lastField!=null && shield==0) {
+            changeBGM(SoundMapping.LOSE);
             end(false);
         }
         else if (reveiledFields+mineCount==fieldCount) {
+            changeBGM(SoundMapping.WIN);
             end(true);
         }
     }

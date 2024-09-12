@@ -21,14 +21,20 @@ public class SoundMapping {
     public static String BUTTON = "button.wav";
     /** Sound filename for reveil action */
     public static String REVEIL = "reveil.wav";
-    /** Sound filename for reveil action */
+    /** Sound filename for flag action */
     public static String FLAG = "flag.wav";
-    /** Sound filename for reveil action */
+    /** Sound filename for unflag action */
     public static String UNFLAG = "unflag.wav";
-    /** Sound filename for reveil action */
+    /** Sound filename for safezone action */
     public static String SAFEZONE = "safezone.wav";
-    /** Sound filename for reveil action */
+    /** Sound filename for shield action */
     public static String SHIELD = "shield.wav";
-    /** Sound filename for reveil action */
+    /** Sound filename for truesight action */
     public static String TRUESIGHT = "truesight.wav";
+    /** Sound filename for win screen */
+    public static String WIN = "win.wav";
+    /** Sound filename for lose screen */
+    public static String LOSE = "lose.wav";
+    /** Sound filename for unavailable Buttons */
+    public static String UNAVAILABLE = "unavailable.wav";
 }
