@@ -38,10 +38,13 @@ public class MineField extends Scene {
     private boolean removeEndscreenImage;
     private Mode mode, previousMode;
     private Button removeEndscreen;
+    private Button safezoneButton;
+    private Button shieldButton;
+    private Button truesighButton;
     private List<Button> otherButtons;
     private List<Field> truesightFields;
     private Field lastField;
-    private Textfield shields;
+    private Textfield informationField1, informationField2;
 
     /**
      * Takes a width, height and mine count to create a Minefield Scene.  
@@ -61,16 +64,24 @@ public class MineField extends Scene {
         this.reveiledFields = 0;
         this.sleepCounter = 0;
         this.endCount = 0;
-        this.shield = 0;
+        this.shield = 1;
         this.truesightFields = null;
         this.lastField = null;
         this.otherButtons = new ArrayList<>();
         this.mode = Mode.NEUTRAL;
-        this.shields = new Textfield(25, 200, "" + this.shield);
-        this.shields.setColor(Color.WHITE);
+        String info = "Shields:\n\n";
+        info += "Remaining Powerups:\n\n";
+        info += " - Safezone Finder:\n";
+        info += " - Shield:\n";
+        info += " - Truesight:";
+        this.informationField1 = new Textfield(25, 200, info);
+        this.informationField1.setColor(Color.WHITE);
+        this.informationField2 = new Textfield(140, 200, " " + this.shield);
+        this.informationField2.setColor(Color.WHITE);
         setBGM(SoundMapping.MINEFIELD);
 
-        registerComponent(this.shields);
+        registerComponent(this.informationField1);
+        registerComponent(this.informationField2);
 
         Button menu = new Button(100, 50, 25, 25, "MENU", Color.GRAY);
         menu.setAction(() -> {
@@ -86,18 +97,17 @@ public class MineField extends Scene {
         exit.setAction(() -> {
             System.exit(0);
         });
-        Button safezoneButton = new Button(100, 50, 25, windowSize.y/2 - 75, "FIND SAFEZONE", Color.GRAY);
+        safezoneButton = new Button(100, 50, 25, windowSize.y/2 - 75, "FIND SAFEZONE", Color.GRAY);
         safezoneButton.setLimit(1);
         safezoneButton.setAction(() -> {
             setMode(Mode.SAFEZONE);
         });
-        Button shieldButton = new Button(100, 50, 25, windowSize.y/2 , "SHIELD", Color.GRAY);
+        shieldButton = new Button(100, 50, 25, windowSize.y/2 , "SHIELD", Color.GRAY);
         shieldButton.setLimit(2);
         shieldButton.setAction(() -> {
             this.shield = 4;
-            this.shields.setText("" + (this.shield-1));
         });
-        Button truesighButton = new Button(100, 50, 25, windowSize.y/2 + 75 , "TRUESIGHT", Color.GRAY);
+        truesighButton = new Button(100, 50, 25, windowSize.y/2 + 75 , "TRUESIGHT", Color.GRAY);
         truesighButton.setLimit(3);
         truesighButton.setAction(() -> {
             setMode(Mode.TRUESIGHT);
@@ -146,6 +156,14 @@ public class MineField extends Scene {
 
     private void setModeNeutral() {
         this.mode = Mode.NEUTRAL;
+    }
+
+    private void updateInformationText() {
+        String info = (this.shield -1) + "\n\n\n\n";
+        info += safezoneButton.getLimit() + "\n";
+        info += shieldButton.getLimit() + "\n";
+        info += truesighButton.getLimit();
+        this.informationField2.setText(info);
     }
 
     private void setModeSleep(int count) {
@@ -200,6 +218,7 @@ public class MineField extends Scene {
     @Override
     public void update() {
         super.update();
+        updateInformationText();
         lastField = updateReveiledFields();
         switch (mode) {
             case Mode.NEUTRAL:
@@ -257,7 +276,6 @@ public class MineField extends Scene {
         }
         if (reveiledFields>previousCount && shield > 0) {
             shield -= 1;
-            shields.setText("" + (shield-1));
         }
         return reveiledMine;
     }

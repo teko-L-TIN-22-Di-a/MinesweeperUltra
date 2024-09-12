@@ -20,7 +20,7 @@ public class Textfield extends Component{
      * @param buttonText    displayed text
      */
     public Textfield(int x, int y, String text) {
-        super(x, y, 1, 1);
+        super(1, 1, x, y);
         this.text = text;
         BufferedImage image = createImage();
         setImage(image);
@@ -41,15 +41,37 @@ public class Textfield extends Component{
      * @return  image with display text
      */
     private BufferedImage createImage() {
-        BufferedImage ImageTMP = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-        Graphics gTMP = ImageTMP.getGraphics();
-        gTMP.drawString(text, 0, 0);
-        FontMetrics fm = gTMP.getFontMetrics();
-        gTMP.dispose();
-        BufferedImage image = new BufferedImage(fm.stringWidth(text), fm.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        // Split the text into lines
+        String[] lines = text.split("\n");
+
+        // Create a temporary image to get the font metrics
+        BufferedImage tempImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+        Graphics tempGraphics = tempImage.getGraphics();
+        FontMetrics fm = tempGraphics.getFontMetrics();
+        int lineHeight = fm.getHeight();
+
+        // Calculate the width and height of the final image
+        int imageWidth = 0;
+        for (String line : lines) {
+            int lineWidth = fm.stringWidth(line);
+            if (lineWidth > imageWidth) {
+                imageWidth = lineWidth;
+            }
+        }
+        int imageHeight = lineHeight * lines.length;
+
+        // Create the final image
+        BufferedImage image = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics g = image.getGraphics();
         g.setColor(color);
-        g.drawString(text, 0, g.getFontMetrics().getAscent());
+
+        // Draw each line of text
+        int y = fm.getAscent();
+        for (String line : lines) {
+            g.drawString(line, 0, y);
+            y += lineHeight;
+        }
+
         g.dispose();
         return image;
     }
