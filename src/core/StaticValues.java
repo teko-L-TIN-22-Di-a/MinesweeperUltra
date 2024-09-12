@@ -71,10 +71,13 @@ public class StaticValues {
         NEW
     }
 
+    /** Avaiable Modes for the Minefield scene */
     public static enum Mode {
+        /** Standard Mode */
         NEUTRAL,
-        SAFEZONE,
+        /** Mode for activating Truesight */
         TRUESIGHT,
+        /** Mode to pass time and reset options for Neutral Mode */
         SLEEP
     }
 }

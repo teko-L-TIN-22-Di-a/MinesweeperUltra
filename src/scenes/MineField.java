@@ -97,7 +97,7 @@ public class MineField extends Scene {
         safezoneButton = new Button(100, 50, 25, windowSize.y/2 - 75, "FIND SAFEZONE", Color.GRAY);
         safezoneButton.setLimit(1);
         safezoneButton.setAction(() -> {
-            setMode(Mode.SAFEZONE);
+            safeZoneFinder();
         });
         shieldButton = new Button(100, 50, 25, windowSize.y/2 , "SHIELD", Color.GRAY);
         shieldButton.setLimit(2);
@@ -222,9 +222,6 @@ public class MineField extends Scene {
         updateInformationText();
         this.lastField = updateReveiledFields();
         switch (mode) {
-            case Mode.SAFEZONE:
-                safeZoneFinder();
-                break;
             case Mode.TRUESIGHT:
                 truesightFields = truesight();
                 break;
@@ -277,7 +274,9 @@ public class MineField extends Scene {
         }
         if (reveiledFields>previousCount && shield > 0) {
             shield -= 1;
-            setModeSleep(20);
+            if (reveiledMine != null) {
+                setModeSleep(20);
+            }
         }
         return reveiledMine;
     }
