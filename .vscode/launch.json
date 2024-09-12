@@ -9,7 +9,7 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "src.Main",
-            "projectName": "MinesweeperUltra_600abd98"
+            "projectName": ""
         }
     ]
 }

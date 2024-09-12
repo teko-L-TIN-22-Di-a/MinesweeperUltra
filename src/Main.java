@@ -2,6 +2,8 @@ package src;
 
 import javax.swing.SwingUtilities;
 
+import src.core.Gameloop;
+
 /**
  * Main class. Serves as the entry Point to the app.
  */
@@ -11,7 +13,8 @@ public class Main {
      * Not yet defined.
      */
     public Main() {
-        //empty
+        Gameloop loop = new Gameloop();
+        loop.start();
     }
 
     /**
