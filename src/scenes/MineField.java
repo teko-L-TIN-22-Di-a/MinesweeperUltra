@@ -64,7 +64,7 @@ public class MineField extends Scene {
         this.reveiledFields = 0;
         this.sleepCounter = 0;
         this.endCount = 0;
-        this.shield = 1;
+        this.shield = 0;
         this.truesightFields = null;
         this.lastField = null;
         this.otherButtons = new ArrayList<>();
@@ -79,9 +79,6 @@ public class MineField extends Scene {
         this.informationField2 = new Textfield(140, 200, " " + this.shield);
         this.informationField2.setColor(Color.WHITE);
         setBGM(SoundMapping.MINEFIELD);
-
-        registerComponent(this.informationField1);
-        registerComponent(this.informationField2);
 
         Button menu = new Button(100, 50, 25, 25, "MENU", Color.GRAY);
         menu.setAction(() -> {
@@ -105,7 +102,7 @@ public class MineField extends Scene {
         shieldButton = new Button(100, 50, 25, windowSize.y/2 , "SHIELD", Color.GRAY);
         shieldButton.setLimit(2);
         shieldButton.setAction(() -> {
-            this.shield = 4;
+            this.shield = 3;
         });
         truesighButton = new Button(100, 50, 25, windowSize.y/2 + 75 , "TRUESIGHT", Color.GRAY);
         truesighButton.setLimit(3);
@@ -133,7 +130,7 @@ public class MineField extends Scene {
         for (Button b: otherButtons) {
             b.setSound(buttonSound);
         }
-        registerOtherButtons();
+        registerOtherComponents();
         
         grid = new Grid(width, height, mineCount);
 
@@ -159,7 +156,7 @@ public class MineField extends Scene {
     }
 
     private void updateInformationText() {
-        String info = (this.shield -1) + "\n\n\n\n";
+        String info = (this.shield) + "\n\n\n\n";
         info += safezoneButton.getLimit() + "\n";
         info += shieldButton.getLimit() + "\n";
         info += truesighButton.getLimit();
@@ -167,7 +164,7 @@ public class MineField extends Scene {
     }
 
     private void setModeSleep(int count) {
-        unregisterOtherButtons();
+        unregisterOtherComponents();
         this.previousMode = this.mode;
         this.mode = Mode.SLEEP;
         this.sleepCounter = count;
@@ -193,19 +190,23 @@ public class MineField extends Scene {
     /**
      * Registers all Buttons added to the otherButtons List.
      */
-    private void registerOtherButtons() {
+    private void registerOtherComponents() {
         for (Button b: otherButtons) {
             registerButton(b);
         }
+        registerComponent(this.informationField1);
+        registerComponent(this.informationField2);
     }
 
     /**
      * Unregisters all Buttons added to the otherButtons List.
      */
-    private void unregisterOtherButtons() {
+    private void unregisterOtherComponents() {
         for (Button b: otherButtons) {
             unregisterButton(b);
         }
+        unregisterComponent(this.informationField1);
+        unregisterComponent(this.informationField2);
     }
 
     /**
@@ -219,19 +220,8 @@ public class MineField extends Scene {
     public void update() {
         super.update();
         updateInformationText();
-        lastField = updateReveiledFields();
+        this.lastField = updateReveiledFields();
         switch (mode) {
-            case Mode.NEUTRAL:
-                if (removeEndscreenImage) {
-                    removeEndScreen();
-                }
-                if (endCount!=0) {
-                    updateEndCount();
-                }
-                if (!end) {
-                    checkEndConditions(lastField);
-                }
-                break;
             case Mode.SAFEZONE:
                 safeZoneFinder();
                 break;
@@ -240,7 +230,7 @@ public class MineField extends Scene {
                 break;
             case Mode.SLEEP:
                 if (sleepCounter == 0) {
-                    registerOtherButtons();
+                    registerOtherComponents();
                     this.mode = this.previousMode;
                     this.previousMode = Mode.SLEEP;
                     if (this.lastField != null) {
@@ -259,10 +249,21 @@ public class MineField extends Scene {
                     sleepCounter -= 1;
                 }
                 break;
+            case Mode.NEUTRAL:
+                if (removeEndscreenImage) {
+                    removeEndScreen();
+                }
+                if (endCount!=0) {
+                    updateEndCount();
+                }
+                if (!end) {
+                    checkEndConditions(this.lastField);
+                }
+                break;
         }
     }
 
-    public Field updateReveiledFields() {
+    private Field updateReveiledFields() {
         int previousCount = reveiledFields;
         reveiledFields = 0;
         Field reveiledMine = null;
@@ -276,11 +277,12 @@ public class MineField extends Scene {
         }
         if (reveiledFields>previousCount && shield > 0) {
             shield -= 1;
+            setModeSleep(20);
         }
         return reveiledMine;
     }
 
-    public void safeZoneFinder() {
+    private void safeZoneFinder() {
         Random duck = new Random();
         Point gridSize = grid.getSize();
         boolean validField = false;
@@ -297,7 +299,7 @@ public class MineField extends Scene {
         setModeNeutral();
     }
 
-    public List<Field> truesight() {
+    private List<Field> truesight() {
         List<Field> truesightFields = new ArrayList<>();
         for (Field f: grid.getAllFields()) {
             if (f.getState()==FieldState.UNKNOWN) {
@@ -309,26 +311,23 @@ public class MineField extends Scene {
         return truesightFields;
     }
 
-    public void updateEndCount() {
+    private void updateEndCount() {
         if (getCounter() == endCount + 40 ) {
             registerButton(removeEndscreen);
-            unregisterOtherButtons();
+            unregisterOtherComponents();
             endCount = 0;
         }
     }
 
-    public void removeEndScreen() {
+    private void removeEndScreen() {
         unregisterButton(removeEndscreen);
-        registerOtherButtons();
+        registerOtherComponents();
         removeEndscreenImage = false;
     }
 
-    public void checkEndConditions(Field lastField) {
+    private void checkEndConditions(Field lastField) {
         if (lastField!=null && shield==0) {
             end(false);
-        }
-        else if (lastField!=null && shield>0) {
-            setModeSleep(20);
         }
         else if (reveiledFields+mineCount==fieldCount) {
             end(true);
