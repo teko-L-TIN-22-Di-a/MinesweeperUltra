@@ -43,10 +43,10 @@ public class StaticValues {
         Color.BLUE,
         Color.GREEN,
         Color.ORANGE,
-        Color.YELLOW,
-        Color.MAGENTA,
         Color.PINK,
+        Color.MAGENTA,
         Color.CYAN,
+        Color.YELLOW,
         Color.BLACK,
         Color.RED
     };
