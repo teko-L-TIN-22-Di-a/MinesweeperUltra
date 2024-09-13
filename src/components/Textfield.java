@@ -47,6 +47,11 @@ public class Textfield extends Component{
         setImage(createImage());
     }
 
+    /**
+     * Takes a boolean and if true, will set the orientation of the
+     * Textfield to the right side, if false to the left side.
+     * @param right
+     */
     public void setOrientation(boolean right) {
         this.orientRight = right;
     }

@@ -54,6 +54,8 @@ public class MineField extends Scene {
      * @param width amount of Fields in the width of the Minefield
      * @param height amount of Fields in th height of the Minefield
      * @param mineCount amount of Mines in the Minefield
+     * @param size text to display for size in inofpannel
+     * @param difficulty text to display for difficulty in inofpannel
      */
     public MineField(int width, int height, int mineCount, String size, String difficulty) {
         super(false, "minefield");
