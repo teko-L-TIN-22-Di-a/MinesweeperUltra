@@ -13,6 +13,7 @@ public class Textfield extends Component{
 
     private String text;
     private Color color;
+    private boolean orientRight;
 
     /**
      * Takes x and y coordinate and a String to create a Component with text.
@@ -23,6 +24,7 @@ public class Textfield extends Component{
     public Textfield(int x, int y, String text) {
         super(1, 1, x, y);
         this.text = text;
+        this.orientRight = false;
         BufferedImage image = createImage();
         setImage(image);
         setSize(image.getWidth(), image.getHeight());
@@ -45,6 +47,10 @@ public class Textfield extends Component{
         setImage(createImage());
     }
 
+    public void setOrientation(boolean right) {
+        this.orientRight = right;
+    }
+
     /**
      * Creates an image with the display text.
      * @return image with display text
@@ -61,11 +67,14 @@ public class Textfield extends Component{
 
         // Calculate the width and height of the final image
         int imageWidth = 0;
-        for (String line : lines) {
+        int[] widthList = new int[lines.length];
+        for (int i = 0; i < lines.length; i++) {
+            String line = lines[i];
             int lineWidth = fm.stringWidth(line);
             if (lineWidth > imageWidth) {
                 imageWidth = lineWidth;
             }
+            widthList[i] = lineWidth;
         }
         int imageHeight = lineHeight * lines.length;
 
@@ -76,9 +85,15 @@ public class Textfield extends Component{
 
         // Draw each line of text
         int y = fm.getAscent();
-        for (String line : lines) {
-            g.drawString(line, 0, y);
+        for (int i = 0; i < lines.length; i++) {
+            String line = lines[i]; {
+            int x = 0;
+            if (orientRight) {
+                x = imageWidth - widthList[i];
+            }
+            g.drawString(line, x, y);
             y += lineHeight;
+            }
         }
 
         g.dispose();
