@@ -6,7 +6,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import src.assets.Loader;
-import src.assets.SoundMapping;
+import src.assets.sounds.SoundMapping;
 
 /**
  * Extends the Component class with a Textfield and a Runnable action

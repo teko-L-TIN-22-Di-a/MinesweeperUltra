@@ -8,7 +8,7 @@ import java.util.Random;
 import javax.sound.sampled.Clip;
 
 import src.assets.Loader;
-import src.assets.SoundMapping;
+import src.assets.sounds.SoundMapping;
 import src.core.StaticValues;
 
 /**

@@ -1,0 +1,13 @@
+{
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-17",
+            "path": "c:\\Program Files\\Java\\jdk-17",
+            "default": true
+        },
+    ],
+    "java.dependency.packagePresentation": "hierarchical",
+    "java.project.sourcePaths": [
+        "./"
+    ]
+}

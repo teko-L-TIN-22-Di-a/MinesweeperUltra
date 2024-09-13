@@ -16,13 +16,13 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '22'
+        java-version: '17'
         distribution: 'adopt'
 
     - name: Generate Javadoc
       run: |
         # Create Javadoc files
-        javadoc -d docs/ -subpackages src
+        javadoc -d docs/ -subpackages /src
         
         # Set user for updateing
         git config --global user.name 'BOTFloindil'

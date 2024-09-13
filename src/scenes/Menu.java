@@ -7,7 +7,7 @@ import javax.sound.sampled.Clip;
 
 import src.core.StaticValues;
 import src.assets.Loader;
-import src.assets.SoundMapping;
+import src.assets.sounds.SoundMapping;
 import src.components.Button;
 import src.components.Textfield;
 

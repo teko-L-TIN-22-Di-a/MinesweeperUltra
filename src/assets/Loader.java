@@ -12,6 +12,9 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import src.assets.images.ImageMapping;
+import src.assets.sounds.SoundMapping;
+
 /** Loads assets from the resources folder. */
 public class Loader {
 

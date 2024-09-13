@@ -9,9 +9,9 @@ import java.util.Random;
 
 import javax.sound.sampled.Clip;
 
-import src.assets.ImageMapping;
 import src.assets.Loader;
-import src.assets.SoundMapping;
+import src.assets.images.ImageMapping;
+import src.assets.sounds.SoundMapping;
 import src.components.Button;
 import src.components.Field;
 import src.components.Grid;
@@ -254,10 +254,10 @@ public class MineField extends Scene {
         updateInformationText();
         this.lastField = updateReveiledFields();
         switch (mode) {
-            case Mode.TRUESIGHT:
+            case TRUESIGHT:
                 truesightFields = truesight();
                 break;
-            case Mode.SLEEP:
+            case SLEEP:
                 if (sleepCounter == 0) {
                     registerOtherComponents();
                     this.mode = this.previousMode;
@@ -278,7 +278,7 @@ public class MineField extends Scene {
                     sleepCounter -= 1;
                 }
                 break;
-            case Mode.NEUTRAL:
+            case NEUTRAL:
                 if (removeEndscreenImage) {
                     removeEndScreen();
                 }
@@ -339,7 +339,7 @@ public class MineField extends Scene {
             int x = duck.nextInt(gridSize.x);
             int y = duck.nextInt(gridSize.y);
             f = grid.getField(x, y);
-            if (f.getValue() == 0) {
+            if (f.getValue() == 0 && f.getState() == FieldState.UNKNOWN) {
                 validField = true;
             }
         }
