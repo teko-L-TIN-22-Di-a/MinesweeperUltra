@@ -1,5 +1,7 @@
 src
 src.assets
+src.assets.images
+src.assets.sounds
 src.components
 src.core
 src.scenes
