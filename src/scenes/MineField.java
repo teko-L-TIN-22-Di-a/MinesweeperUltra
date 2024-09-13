@@ -1,4 +1,4 @@
-package src.scenes;
+package scenes;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -9,16 +9,16 @@ import java.util.Random;
 
 import javax.sound.sampled.Clip;
 
-import src.assets.ImageMapping;
-import src.assets.Loader;
-import src.assets.SoundMapping;
-import src.components.Button;
-import src.components.Field;
-import src.components.Grid;
-import src.components.Textfield;
-import src.core.StaticValues;
-import src.core.StaticValues.FieldState;
-import src.core.StaticValues.Mode;
+import assets.Loader;
+import assets.images.ImageMapping;
+import assets.sounds.SoundMapping;
+import components.Button;
+import components.Field;
+import components.Grid;
+import components.Textfield;
+import core.StaticValues;
+import core.StaticValues.FieldState;
+import core.StaticValues.Mode;
 
 
 /**
@@ -84,25 +84,30 @@ public class MineField extends Scene {
             Menu m = new Menu();
             setNewScene(m);
         });
+
         Button restart = new Button(100, 50, windowSize.x-125, 25 , "RESTART", Color.GRAY);
         restart.setAction(() -> {
             MineField m = new MineField(width, height, mineCount);
             setNewScene(m);
         });
+
         Button exit = new Button(100, 50, windowSize.x-125, windowSize.y-75 , "EXIT", Color.GRAY);
         exit.setAction(() -> {
             System.exit(0);
         });
+
         safezoneButton = new Button(100, 50, 25, windowSize.y/2 - 75, "FIND SAFEZONE", Color.GRAY);
         safezoneButton.setLimit(1);
         safezoneButton.setAction(() -> {
             safeZoneFinder();
         });
+
         shieldButton = new Button(100, 50, 25, windowSize.y/2 , "SHIELD", Color.GRAY);
         shieldButton.setLimit(2);
         shieldButton.setAction(() -> {
             this.shield = 3;
         });
+
         truesighButton = new Button(100, 50, 25, windowSize.y/2 + 75 , "TRUESIGHT", Color.GRAY);
         truesighButton.setLimit(3);
         truesighButton.setAction(() -> {
@@ -129,6 +134,9 @@ public class MineField extends Scene {
         for (Button b: otherButtons) {
             b.setSound(buttonSound);
         }
+        safezoneButton.setSound(Loader.loadSound(SoundMapping.SAFEZONE));
+        shieldButton.setSound(Loader.loadSound(SoundMapping.SHIELD));
+        truesighButton.setSound(Loader.loadSound(SoundMapping.TRUESIGHT));
         registerOtherComponents();
         
         grid = new Grid(width, height, mineCount);
@@ -233,10 +241,10 @@ public class MineField extends Scene {
         updateInformationText();
         this.lastField = updateReveiledFields();
         switch (mode) {
-            case Mode.TRUESIGHT:
+            case TRUESIGHT:
                 truesightFields = truesight();
                 break;
-            case Mode.SLEEP:
+            case SLEEP:
                 if (sleepCounter == 0) {
                     registerOtherComponents();
                     this.mode = this.previousMode;
@@ -257,7 +265,7 @@ public class MineField extends Scene {
                     sleepCounter -= 1;
                 }
                 break;
-            case Mode.NEUTRAL:
+            case NEUTRAL:
                 if (removeEndscreenImage) {
                     removeEndScreen();
                 }
@@ -361,6 +369,7 @@ public class MineField extends Scene {
         unregisterButton(removeEndscreen);
         registerOtherComponents();
         removeEndscreenImage = false;
+        changeBGM(SoundMapping.MINEFIELD);
     }
 
     /**
@@ -370,9 +379,11 @@ public class MineField extends Scene {
      */
     private void checkEndConditions(Field lastField) {
         if (lastField!=null && shield==0) {
+            changeBGM(SoundMapping.LOSE);
             end(false);
         }
         else if (reveiledFields+mineCount==fieldCount) {
+            changeBGM(SoundMapping.WIN);
             end(true);
         }
     }

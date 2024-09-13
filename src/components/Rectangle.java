@@ -1,4 +1,4 @@
-package src.components;
+package components;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -6,7 +6,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.core.StaticValues.Corners;
+import core.StaticValues.Corners;
 
 /**
  * Provides functionalities to create and calculate with rectangles.  

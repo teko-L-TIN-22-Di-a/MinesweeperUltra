@@ -7,4 +7,4 @@
  * @see Gameloop
  * @see StaticValues
  */
-package src.core;
+package core;

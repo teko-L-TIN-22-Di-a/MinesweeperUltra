@@ -1,4 +1,4 @@
-package src.components;
+package components;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -8,8 +8,8 @@ import java.util.List;
 
 import javax.sound.sampled.Clip;
 
-import src.core.StaticValues;
-import src.core.StaticValues.FieldState;
+import core.StaticValues;
+import core.StaticValues.FieldState;
 
 /**
  * The Field will be placed in the Grid and contains a value from 0-9, where 9

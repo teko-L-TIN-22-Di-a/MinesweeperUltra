@@ -1,4 +1,4 @@
-package src.scenes;
+package scenes;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -6,10 +6,10 @@ import java.util.List;
 
 import javax.sound.sampled.Clip;
 
-import src.assets.Loader;
-import src.components.Button;
-import src.components.Component;
-import src.components.Field;
+import assets.Loader;
+import components.Button;
+import components.Component;
+import components.Field;
 
 /**
  * Baseclass for any Scene.
@@ -54,6 +54,16 @@ public class Scene {
     public void setBGM(String filename) {
         Clip audio = Loader.loadSound(filename);
         this.bgm = audio;
+    }
+
+    /**
+     * Changes the Backgroundmusic and starts the new one from beginning
+     */
+    public void changeBGM(String filename) {
+        this.bgm.stop();
+        this.bgm = Loader.loadSound(filename);
+        this.bgm.setFramePosition(0);
+        this.bgm.loop(-1);
     }
 
     /**

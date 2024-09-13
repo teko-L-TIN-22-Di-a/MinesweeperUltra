@@ -1,9 +1,12 @@
-package src.components;
+package components;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+
+import assets.Loader;
+import assets.sounds.SoundMapping;
 
 /**
  * Extends the Component class with a Textfield and a Runnable action
@@ -82,14 +85,16 @@ public class Button extends Component{
      * runs the defined action, if the limit is not breached.
      */
     public void action() {
+        playSound();
         if (this.action != null) {
             if (!this.limit) {
-                playSound();
                 this.action.run();
             }
             else if (this.limit && this.limitCount > 0) {
                 this.limitCount -= 1;
-                playSound();
+                if (this.limitCount == 0) {
+                    setSound(Loader.loadSound(SoundMapping.UNAVAILABLE));
+                }
                 this.action.run();
             }
         }

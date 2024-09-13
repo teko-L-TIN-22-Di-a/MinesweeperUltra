@@ -1,4 +1,4 @@
-package src.components;
+package components;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -7,9 +7,9 @@ import java.util.Random;
 
 import javax.sound.sampled.Clip;
 
-import src.assets.Loader;
-import src.assets.SoundMapping;
-import src.core.StaticValues;
+import assets.Loader;
+import assets.sounds.SoundMapping;
+import core.StaticValues;
 
 /**
  * The Grid Class is intended to set the structure for the Fields. It provides

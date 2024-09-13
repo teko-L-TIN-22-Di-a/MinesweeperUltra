@@ -1,4 +1,4 @@
-package src.core;
+package core;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,10 +12,10 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import src.components.Button;
-import src.components.Component;
-import src.components.Field;
-import src.scenes.Scene;
+import components.Button;
+import components.Component;
+import components.Field;
+import scenes.Scene;
 
 /**
  * Renders the game view to the screen
