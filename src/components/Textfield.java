@@ -1,4 +1,4 @@
-package components;
+package src.components;
 
 import java.awt.Color;
 import java.awt.FontMetrics;

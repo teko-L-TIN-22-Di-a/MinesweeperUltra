@@ -1,6 +1,8 @@
+package src;
+
 import javax.swing.SwingUtilities;
 
-import core.Gameloop;
+import src.core.Gameloop;
 
 /**
  * Main class. Serves as the entry Point to the app.

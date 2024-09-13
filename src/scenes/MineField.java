@@ -1,4 +1,4 @@
-package scenes;
+package src.scenes;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -9,16 +9,16 @@ import java.util.Random;
 
 import javax.sound.sampled.Clip;
 
-import assets.Loader;
-import assets.images.ImageMapping;
-import assets.sounds.SoundMapping;
-import components.Button;
-import components.Field;
-import components.Grid;
-import components.Textfield;
-import core.StaticValues;
-import core.StaticValues.FieldState;
-import core.StaticValues.Mode;
+import src.assets.Loader;
+import src.assets.images.ImageMapping;
+import src.assets.sounds.SoundMapping;
+import src.components.Button;
+import src.components.Field;
+import src.components.Grid;
+import src.components.Textfield;
+import src.core.StaticValues;
+import src.core.StaticValues.FieldState;
+import src.core.StaticValues.Mode;
 
 
 /**

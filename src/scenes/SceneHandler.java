@@ -1,6 +1,6 @@
-package scenes;
+package src.scenes;
 
-import core.StaticValues.SceneTag;
+import src.core.StaticValues.SceneTag;
 
 /**
  * Provides functionalities to switch between scenes.

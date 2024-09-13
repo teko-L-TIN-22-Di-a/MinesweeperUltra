@@ -1,4 +1,4 @@
-package assets.images;
+package src.assets.images;
 
 /**
  * Dataclass to store ImageMappings.

@@ -1,4 +1,4 @@
-package assets.sounds;
+package src.assets.sounds;
 
 /**
  * Dataclass to store SoundMappings.

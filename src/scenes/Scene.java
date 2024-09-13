@@ -1,4 +1,4 @@
-package scenes;
+package src.scenes;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -6,10 +6,10 @@ import java.util.List;
 
 import javax.sound.sampled.Clip;
 
-import assets.Loader;
-import components.Button;
-import components.Component;
-import components.Field;
+import src.assets.Loader;
+import src.components.Button;
+import src.components.Component;
+import src.components.Field;
 
 /**
  * Baseclass for any Scene.
