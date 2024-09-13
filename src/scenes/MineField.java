@@ -321,7 +321,7 @@ public class MineField extends Scene {
             int x = duck.nextInt(gridSize.x);
             int y = duck.nextInt(gridSize.y);
             f = grid.getField(x, y);
-            if (f.getValue() == 0) {
+            if (f.getValue() == 0 && f.getState() == FieldState.UNKNOWN) {
                 validField = true;
             }
         }
