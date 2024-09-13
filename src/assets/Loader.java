@@ -1,4 +1,4 @@
-package src.assets;
+package assets;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
@@ -11,6 +11,9 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
+import assets.images.ImageMapping;
+import assets.sounds.SoundMapping;
 
 /** Loads assets from the resources folder. */
 public class Loader {

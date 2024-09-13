@@ -1,4 +1,4 @@
-package src.core;
+package core;
 
 import java.awt.Color;
 import java.awt.Point;

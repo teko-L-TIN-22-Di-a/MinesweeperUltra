@@ -1,14 +1,14 @@
-package src.core;
+package core;
 
 import java.awt.Point;
 import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-import src.core.StaticValues.SceneTag;
-import src.scenes.Menu;
-import src.scenes.Scene;
-import src.scenes.SceneHandler;
+import core.StaticValues.SceneTag;
+import scenes.Menu;
+import scenes.Scene;
+import scenes.SceneHandler;
 
 /**
  * Handles Events regarding the gameloop.

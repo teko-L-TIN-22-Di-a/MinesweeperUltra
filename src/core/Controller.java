@@ -1,4 +1,4 @@
-package src.core;
+package core;
 
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -8,8 +8,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import src.components.Button;
-import src.components.Field;
+import components.Button;
+import components.Field;
 
 /**
  * Handles Player input

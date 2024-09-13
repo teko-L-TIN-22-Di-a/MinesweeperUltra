@@ -1,12 +1,12 @@
-package src.components;
+package components;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-import src.assets.Loader;
-import src.assets.SoundMapping;
+import assets.Loader;
+import assets.sounds.SoundMapping;
 
 /**
  * Extends the Component class with a Textfield and a Runnable action

@@ -1,4 +1,4 @@
-package src.components;
+package components;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -7,8 +7,8 @@ import java.awt.image.BufferedImage;
 
 import javax.sound.sampled.Clip;
 
-import src.assets.Loader;
-import src.core.StaticValues.Corners;
+import assets.Loader;
+import core.StaticValues.Corners;
 
 /**
  * Baseclass for a Component

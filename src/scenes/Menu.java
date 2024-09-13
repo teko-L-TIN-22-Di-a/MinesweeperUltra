@@ -1,15 +1,15 @@
-package src.scenes;
+package scenes;
 
 import java.awt.Color;
 import java.awt.Point;
 
 import javax.sound.sampled.Clip;
 
-import src.core.StaticValues;
-import src.assets.Loader;
-import src.assets.SoundMapping;
-import src.components.Button;
-import src.components.Textfield;
+import core.StaticValues;
+import assets.Loader;
+import assets.sounds.SoundMapping;
+import components.Button;
+import components.Textfield;
 
 /**
  * Extends the Scene class to create a Menu.  

@@ -1,4 +1,4 @@
-package src.scenes;
+package scenes;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -9,16 +9,16 @@ import java.util.Random;
 
 import javax.sound.sampled.Clip;
 
-import src.assets.ImageMapping;
-import src.assets.Loader;
-import src.assets.SoundMapping;
-import src.components.Button;
-import src.components.Field;
-import src.components.Grid;
-import src.components.Textfield;
-import src.core.StaticValues;
-import src.core.StaticValues.FieldState;
-import src.core.StaticValues.Mode;
+import assets.Loader;
+import assets.images.ImageMapping;
+import assets.sounds.SoundMapping;
+import components.Button;
+import components.Field;
+import components.Grid;
+import components.Textfield;
+import core.StaticValues;
+import core.StaticValues.FieldState;
+import core.StaticValues.Mode;
 
 
 /**
@@ -241,10 +241,10 @@ public class MineField extends Scene {
         updateInformationText();
         this.lastField = updateReveiledFields();
         switch (mode) {
-            case Mode.TRUESIGHT:
+            case TRUESIGHT:
                 truesightFields = truesight();
                 break;
-            case Mode.SLEEP:
+            case SLEEP:
                 if (sleepCounter == 0) {
                     registerOtherComponents();
                     this.mode = this.previousMode;
@@ -265,7 +265,7 @@ public class MineField extends Scene {
                     sleepCounter -= 1;
                 }
                 break;
-            case Mode.NEUTRAL:
+            case NEUTRAL:
                 if (removeEndscreenImage) {
                     removeEndScreen();
                 }
