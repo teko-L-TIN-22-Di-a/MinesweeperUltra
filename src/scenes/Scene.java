@@ -58,6 +58,7 @@ public class Scene {
 
     /**
      * Changes the Backgroundmusic and starts the new one from beginning
+     * @param filename name of the new audio file to be loaded.
      */
     public void changeBGM(String filename) {
         this.bgm.stop();
