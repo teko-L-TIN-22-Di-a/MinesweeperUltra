@@ -31,8 +31,9 @@ public class MineField extends Scene {
     private Grid grid;
     private int mineCount;
     private int fieldCount, reveiledFields;
-    private int sleepCounter;
+    private int sleepCounter, flaggedFields;
     private int endCount, shield;
+    private String size, difficulty;
     private boolean end;
     private boolean removeEndscreenImage;
     private Mode mode, previousMode;
@@ -54,28 +55,36 @@ public class MineField extends Scene {
      * @param height amount of Fields in th height of the Minefield
      * @param mineCount amount of Mines in the Minefield
      */
-    public MineField(int width, int height, int mineCount) {
+    public MineField(int width, int height, int mineCount, String size, String difficulty) {
         super(false, "minefield");
         Point windowSize = new Point(StaticValues.CANVAS_WIDTH, StaticValues.CANVAS_HEIGHT);
         this.mineCount = mineCount;
         this.fieldCount = width*height;
         this.removeEndscreenImage = false;
         this.reveiledFields = 0;
+        this.flaggedFields = 0;
         this.sleepCounter = 0;
         this.endCount = 0;
         this.shield = 0;
+        this.size = size;
+        this.difficulty = difficulty;
         this.truesightFields = null;
         this.lastField = null;
         this.otherButtons = new ArrayList<>();
         this.mode = Mode.NEUTRAL;
-        String info = "Shields:\n\n";
+        String info = "Fieldsize:\n";
+        info += "Difficulty:\n\n";
+        info += "Reveileid Fields:\n";
+        info += "Flagged Fields:\n";
+        info += "Shields:\n\n";
         info += "Remaining Powerups:\n\n";
         info += " - Safezone Finder:\n";
         info += " - Shield:\n";
         info += " - Truesight:";
         this.informationField1 = new Textfield(25, 200, info);
         this.informationField1.setColor(Color.WHITE);
-        this.informationField2 = new Textfield(140, 200, " " + this.shield);
+        this.informationField2 = new Textfield(110, 200, " ");
+        this.informationField2.setOrientation(true);
         this.informationField2.setColor(Color.WHITE);
         setBGM(SoundMapping.MINEFIELD);
 
@@ -87,7 +96,7 @@ public class MineField extends Scene {
 
         Button restart = new Button(100, 50, windowSize.x-125, 25 , "RESTART", Color.GRAY);
         restart.setAction(() -> {
-            MineField m = new MineField(width, height, mineCount);
+            MineField m = new MineField(width, height, mineCount, size, difficulty);
             setNewScene(m);
         });
 
@@ -170,7 +179,11 @@ public class MineField extends Scene {
      * - Amount of Abilities available
      */
     private void updateInformationText() {
-        String info = (this.shield) + "\n\n\n\n";
+        String info = this.size + "\n";
+        info += this.difficulty + "\n\n";
+        info += this.reveiledFields + "\n";
+        info += this.flaggedFields + "\n";
+        info += (this.shield) + "\n\n\n\n";
         info += safezoneButton.getLimit() + "\n";
         info += shieldButton.getLimit() + "\n";
         info += truesighButton.getLimit();
@@ -289,13 +302,18 @@ public class MineField extends Scene {
     private Field updateReveiledFields() {
         int previousCount = reveiledFields;
         reveiledFields = 0;
+        flaggedFields = 0;
         Field reveiledMine = null;
         for (Field f: getFields()) {
-            if (f.getState() == FieldState.REVEILED) {
+            FieldState state = f.getState();
+            if (state == FieldState.REVEILED) {
                 reveiledFields +=1;
                 if (f.getValue()==9) {
                     reveiledMine = f;
                 }
+            }
+            else if (state == FieldState.FLAGGED) {
+                flaggedFields += 1;
             }
         }
         if (reveiledFields>previousCount && shield > 0) {
@@ -321,7 +339,7 @@ public class MineField extends Scene {
             int x = duck.nextInt(gridSize.x);
             int y = duck.nextInt(gridSize.y);
             f = grid.getField(x, y);
-            if (f.getValue() == 0) {
+            if (f.getValue() == 0 && f.getState() == FieldState.UNKNOWN) {
                 validField = true;
             }
         }

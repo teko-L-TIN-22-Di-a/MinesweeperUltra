@@ -51,7 +51,7 @@ public class Menu extends Scene {
         Button start = new Button(100, 50, width/2-50, height/2+300, "START", Color.GRAY);
         start.setSound(buttonSound);
         start.setAction(() -> {
-            MineField mf = new MineField(gridSize.x, gridSize.y, mines);
+            MineField mf = new MineField(gridSize.x, gridSize.y, mines, sizeText, difficultyText);
             setNewScene(mf);
         });
         registerButton(start);
