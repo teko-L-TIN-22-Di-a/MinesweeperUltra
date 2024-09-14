@@ -74,7 +74,11 @@ public class MineField extends Scene {
         this.lastField = null;
         this.otherButtons = new ArrayList<>();
         this.mode = Mode.NEUTRAL;
-        String info = "Fieldsize:\n";
+        String info = "Mouse Controls:\n\n";
+        info += "Reveil Field\n";
+        info += "Flag Field:\n\n";
+        info += "Game Information:\n\n";
+        info += "Fieldsize:\n";
         info += "Difficulty:\n\n";
         info += "Reveileid Fields:\n";
         info += "Flagged Fields:\n";
@@ -83,43 +87,47 @@ public class MineField extends Scene {
         info += " - Safezone Finder:\n";
         info += " - Shield:\n";
         info += " - Truesight:";
-        this.informationField1 = new Textfield(25, 200, info);
+        this.informationField1 = new Textfield(0, 0, info);
+        int textfieldCenterY = (windowSize.y-this.informationField1.getHeight())/2;
+        this.informationField1.setLocation(25, textfieldCenterY);
         this.informationField1.setColor(Color.WHITE);
-        this.informationField2 = new Textfield(110, 200, " ");
+        this.informationField2 = new Textfield(100, textfieldCenterY, " ");
         this.informationField2.setOrientation(true);
         this.informationField2.setColor(Color.WHITE);
         setBGM(SoundMapping.MINEFIELD);
 
-        Button menu = new Button(100, 50, 25, 25, "MENU", Color.GRAY);
+        Point buttonsize = StaticValues.BUTTONSIZE;
+
+        Button menu = new Button(buttonsize.x, buttonsize.y, 25, 25, "MENU", Color.GRAY);
         menu.setAction(() -> {
             Menu m = new Menu();
             setNewScene(m);
         });
 
-        Button restart = new Button(100, 50, windowSize.x-125, 25 , "RESTART", Color.GRAY);
+        Button restart = new Button(buttonsize.x, buttonsize.y, windowSize.x-125, 25 , "RESTART", Color.GRAY);
         restart.setAction(() -> {
             MineField m = new MineField(width, height, mineCount, size, difficulty);
             setNewScene(m);
         });
 
-        Button exit = new Button(100, 50, windowSize.x-125, windowSize.y-75 , "EXIT", Color.GRAY);
+        Button exit = new Button(buttonsize.x, buttonsize.y, windowSize.x-125, windowSize.y-75 , "EXIT", Color.GRAY);
         exit.setAction(() -> {
             System.exit(0);
         });
 
-        safezoneButton = new Button(100, 50, 25, windowSize.y/2 - 75, "FIND SAFEZONE", Color.GRAY);
+        safezoneButton = new Button(buttonsize.x, buttonsize.y, windowSize.x-125, windowSize.y/2 - 75, "FIND SAFEZONE", Color.GRAY);
         safezoneButton.setLimit(1);
         safezoneButton.setAction(() -> {
             safeZoneFinder();
         });
 
-        shieldButton = new Button(100, 50, 25, windowSize.y/2 , "SHIELD", Color.GRAY);
+        shieldButton = new Button(buttonsize.x, buttonsize.y, windowSize.x-125, windowSize.y/2 , "SHIELD", Color.GRAY);
         shieldButton.setLimit(2);
         shieldButton.setAction(() -> {
             this.shield = 3;
         });
 
-        truesighButton = new Button(100, 50, 25, windowSize.y/2 + 75 , "TRUESIGHT", Color.GRAY);
+        truesighButton = new Button(buttonsize.x, buttonsize.y, windowSize.x-125, windowSize.y/2 + 75 , "TRUESIGHT", Color.GRAY);
         truesighButton.setLimit(3);
         truesighButton.setAction(() -> {
             setMode(Mode.TRUESIGHT);
@@ -181,7 +189,9 @@ public class MineField extends Scene {
      * - Amount of Abilities available
      */
     private void updateInformationText() {
-        String info = this.size + "\n";
+        String info = "\n\nLeft Click\n";
+        info += "Right Click\n\n\n\n"; 
+        info += this.size + "\n";
         info += this.difficulty + "\n\n";
         info += this.reveiledFields + "\n";
         info += this.flaggedFields + "\n";

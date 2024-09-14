@@ -48,7 +48,9 @@ public class Menu extends Scene {
 
         Clip buttonSound = Loader.loadSound(SoundMapping.BUTTON);
 
-        Button start = new Button(100, 50, width/2-50, height/2+300, "START", Color.GRAY);
+        Point buttonsize = StaticValues.BUTTONSIZE;
+
+        Button start = new Button(buttonsize.x, buttonsize.y, width/2-150, height/2+300, "START", Color.GRAY);
         start.setSound(buttonSound);
         start.setAction(() -> {
             MineField mf = new MineField(gridSize.x, gridSize.y, mines, sizeText, difficultyText);
@@ -56,14 +58,14 @@ public class Menu extends Scene {
         });
         registerButton(start);
 
-        Button exit = new Button(100, 50, width-125, 25, "EXIT", Color.GRAY);
+        Button exit = new Button(buttonsize.x, buttonsize.y, width/2+50, height/2+300, "EXIT", Color.GRAY);
         exit.setSound(buttonSound);
         exit.setAction(() -> {
             System.exit(0);
         });
         registerButton(exit);
 
-        Button small = new Button(100, 50, width/2-150, height/2-150, "SMALL", Color.GRAY);
+        Button small = new Button(buttonsize.x, buttonsize.y, width/2-150, height/2-150, "SMALL", Color.GRAY);
         small.setSound(buttonSound);
         small.setAction(() -> {
             gridSize = StaticValues.SMALL;
@@ -72,7 +74,7 @@ public class Menu extends Scene {
         });
         registerButton(small);
 
-        Button medium = new Button(100, 50, width/2-150, height/2-25, "MEDIUM", Color.GRAY);
+        Button medium = new Button(buttonsize.x, buttonsize.y, width/2-150, height/2-25, "MEDIUM", Color.GRAY);
         medium.setSound(buttonSound);
         medium.setAction(() -> {
             gridSize = StaticValues.MEDIUM;
@@ -81,7 +83,7 @@ public class Menu extends Scene {
         });
         registerButton(medium);
 
-        Button large = new Button(100, 50, width/2-150, height/2+100, "LARGE", Color.GRAY);
+        Button large = new Button(buttonsize.x, buttonsize.y, width/2-150, height/2+100, "LARGE", Color.GRAY);
         large.setSound(buttonSound);
         large.setAction(() -> {
             gridSize = StaticValues.LARGE;
@@ -90,7 +92,7 @@ public class Menu extends Scene {
         });
         registerButton(large);
 
-        Button easy = new Button(100, 50, width/2+50, height/2-150, "EASY", Color.GRAY);
+        Button easy = new Button(buttonsize.x, buttonsize.y, width/2+50, height/2-150, "EASY", Color.GRAY);
         easy.setSound(buttonSound);
         easy.setAction(() -> {
             difficulty = 0;
@@ -99,7 +101,7 @@ public class Menu extends Scene {
         });
         registerButton(easy);
 
-        Button intermediate = new Button(100, 50, width/2+50, height/2-25, "MEDIUM", Color.GRAY);
+        Button intermediate = new Button(buttonsize.x, buttonsize.y, width/2+50, height/2-25, "MEDIUM", Color.GRAY);
         intermediate.setSound(buttonSound);
         intermediate.setAction(() -> {
             difficulty = 1;
@@ -108,7 +110,7 @@ public class Menu extends Scene {
         });
         registerButton(intermediate);
 
-        Button hard = new Button(100, 50, width/2+50, height/2+100, "HARD", Color.GRAY);
+        Button hard = new Button(buttonsize.x, buttonsize.y, width/2+50, height/2+100, "HARD", Color.GRAY);
         hard.setSound(buttonSound);
         hard.setAction(() -> {
             difficulty = 2;

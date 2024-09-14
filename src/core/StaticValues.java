@@ -22,6 +22,8 @@ public class StaticValues {
     public static int CANVAS_HEIGHT = 1024;
     /** Framerate */
     public static int UPDATE_PERIOD = 60;
+    /** Default size for Buttons */
+    public static Point BUTTONSIZE = new Point(100, 50);
     /** Lenght of the side of the field square */
     public static int FIELDSIZE = 30;
     /** Amount of tickts for truesight activity */
